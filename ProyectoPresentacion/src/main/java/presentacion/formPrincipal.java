@@ -65,7 +65,7 @@ public class formPrincipal extends javax.swing.JFrame {
         panelRound1.setRoundTopLeft(40);
         panelRound1.setRoundTopRight(40);
 
-        btnModuloLicencias.setIcon(new javax.swing.ImageIcon("C:\\Users\\adria\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoPresentacion\\src\\main\\java\\imagenes\\licencia.png")); // NOI18N
+        btnModuloLicencias.setIcon(new javax.swing.ImageIcon("C:\\Users\\adria\\OneDrive\\Documentos\\GitHub\\Agencia-fiscal-\\ProyectoPresentacion\\src\\main\\java\\imagenes\\licencia.png")); // NOI18N
         btnModuloLicencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnModuloLicencias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,7 +76,7 @@ public class formPrincipal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         jLabel2.setText("Módulo de licencias");
 
-        btnModuloPlacas.setIcon(new javax.swing.ImageIcon("C:\\Users\\adria\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoPresentacion\\src\\main\\java\\imagenes\\placas.png")); // NOI18N
+        btnModuloPlacas.setIcon(new javax.swing.ImageIcon("C:\\Users\\adria\\OneDrive\\Documentos\\GitHub\\Agencia-fiscal-\\ProyectoPresentacion\\src\\main\\java\\imagenes\\placas.png")); // NOI18N
         btnModuloPlacas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnModuloPlacas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,7 +87,7 @@ public class formPrincipal extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         jLabel3.setText("Módulo de placas");
 
-        btnModuloConsultas.setIcon(new javax.swing.ImageIcon("C:\\Users\\adria\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoPresentacion\\src\\main\\java\\imagenes\\consultas.png")); // NOI18N
+        btnModuloConsultas.setIcon(new javax.swing.ImageIcon("C:\\Users\\adria\\OneDrive\\Documentos\\GitHub\\Agencia-fiscal-\\ProyectoPresentacion\\src\\main\\java\\imagenes\\consultas.png")); // NOI18N
         btnModuloConsultas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnModuloConsultas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,7 +98,7 @@ public class formPrincipal extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         jLabel4.setText("Módulo de consultas");
 
-        btnModuloReportes.setIcon(new javax.swing.ImageIcon("C:\\Users\\adria\\OneDrive\\Documentos\\NetBeansProjects\\ProyectoPresentacion\\src\\main\\java\\imagenes\\reportes.png")); // NOI18N
+        btnModuloReportes.setIcon(new javax.swing.ImageIcon("C:\\Users\\adria\\OneDrive\\Documentos\\GitHub\\Agencia-fiscal-\\ProyectoPresentacion\\src\\main\\java\\imagenes\\reportes.png")); // NOI18N
         btnModuloReportes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnModuloReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,7 +194,9 @@ public class formPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModuloConsultasActionPerformed
 
     private void btnModuloLicenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloLicenciasActionPerformed
-        // TODO add your handling code here:
+        formConsultarPersona consultarP = new formConsultarPersona();
+        consultarP.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnModuloLicenciasActionPerformed
 
     private void btnModuloReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloReportesActionPerformed
