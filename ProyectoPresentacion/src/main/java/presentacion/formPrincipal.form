@@ -170,6 +170,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="2" name="C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\src\main\java\imagenes\licencia.png"/>
                 </Property>
+                <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
@@ -191,6 +192,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="2" name="C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\src\main\java\imagenes\placas.png"/>
                 </Property>
+                <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
@@ -212,6 +214,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="2" name="C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\src\main\java\imagenes\consultas.png"/>
                 </Property>
+                <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
@@ -233,6 +236,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="2" name="C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\src\main\java\imagenes\reportes.png"/>
                 </Property>
+                <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>

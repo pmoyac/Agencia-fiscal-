@@ -66,6 +66,7 @@ public class formPrincipal extends javax.swing.JFrame {
         panelRound1.setRoundTopRight(40);
 
         btnModuloLicencias.setIcon(new javax.swing.ImageIcon("C:\\Users\\adria\\OneDrive\\Documentos\\GitHub\\Agencia-fiscal-\\ProyectoPresentacion\\src\\main\\java\\imagenes\\licencia.png")); // NOI18N
+        btnModuloLicencias.setBorderPainted(false);
         btnModuloLicencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnModuloLicencias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +78,7 @@ public class formPrincipal extends javax.swing.JFrame {
         jLabel2.setText("Módulo de licencias");
 
         btnModuloPlacas.setIcon(new javax.swing.ImageIcon("C:\\Users\\adria\\OneDrive\\Documentos\\GitHub\\Agencia-fiscal-\\ProyectoPresentacion\\src\\main\\java\\imagenes\\placas.png")); // NOI18N
+        btnModuloPlacas.setBorderPainted(false);
         btnModuloPlacas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnModuloPlacas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,6 +90,7 @@ public class formPrincipal extends javax.swing.JFrame {
         jLabel3.setText("Módulo de placas");
 
         btnModuloConsultas.setIcon(new javax.swing.ImageIcon("C:\\Users\\adria\\OneDrive\\Documentos\\GitHub\\Agencia-fiscal-\\ProyectoPresentacion\\src\\main\\java\\imagenes\\consultas.png")); // NOI18N
+        btnModuloConsultas.setBorderPainted(false);
         btnModuloConsultas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnModuloConsultas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +102,7 @@ public class formPrincipal extends javax.swing.JFrame {
         jLabel4.setText("Módulo de consultas");
 
         btnModuloReportes.setIcon(new javax.swing.ImageIcon("C:\\Users\\adria\\OneDrive\\Documentos\\GitHub\\Agencia-fiscal-\\ProyectoPresentacion\\src\\main\\java\\imagenes\\reportes.png")); // NOI18N
+        btnModuloReportes.setBorderPainted(false);
         btnModuloReportes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnModuloReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,40 +219,6 @@ public class formPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnInsersionPersonasActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(formPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(formPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(formPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(formPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new formPrincipal().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInsersionPersonas;

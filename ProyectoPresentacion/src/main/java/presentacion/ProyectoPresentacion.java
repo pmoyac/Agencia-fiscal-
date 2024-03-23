@@ -7,6 +7,7 @@ package presentacion;
 public class ProyectoPresentacion {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        formPrincipal principal = new formPrincipal();
+        principal.setVisible(true);
     }
 }
