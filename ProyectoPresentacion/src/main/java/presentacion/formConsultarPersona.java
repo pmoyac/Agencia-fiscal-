@@ -84,6 +84,7 @@ public class formConsultarPersona extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         jButton1.setText("Buscar");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
@@ -111,14 +112,22 @@ public class formConsultarPersona extends javax.swing.JFrame {
 
         btnSiguiente.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnSiguiente.setText("Siguiente");
+        btnSiguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSiguiente.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         btnRestaurar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnRestaurar.setText("Restaurar");
+        btnRestaurar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRestaurar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRestaurar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRestaurarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,6 +182,10 @@ public class formConsultarPersona extends javax.swing.JFrame {
         principal.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
+        txtRFC.setText("");
+    }//GEN-LAST:event_btnRestaurarActionPerformed
 
     
 
