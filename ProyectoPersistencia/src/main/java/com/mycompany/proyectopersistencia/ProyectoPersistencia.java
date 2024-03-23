@@ -7,6 +7,6 @@ package com.mycompany.proyectopersistencia;
 public class ProyectoPersistencia {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+      //  System.out.println("Hello World!");
     }
 }

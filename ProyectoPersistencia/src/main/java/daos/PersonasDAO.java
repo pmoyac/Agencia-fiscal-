@@ -1,12 +1,18 @@
 package daos;
 
 import entidadesJPA.Persona;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -48,14 +54,27 @@ public class PersonasDAO implements IPersonasDAO{
                 em.persist(persona);
             }
             em.getTransaction().commit();
+            System.out.println("Personas insertadas correctamente en la base de datos");
         } catch (Exception e) {
             em.getTransaction().rollback();
+            System.out.println("No se pudieron insertar las personas en la base de datos");
         }
     }
 
     @Override
     public Persona buscarPersonasRFC(String rfc) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Persona> cq = cb.createQuery(Persona.class);
+        Root<Persona> root = cq.from(Persona.class);
+        List<Predicate> parametros = new ArrayList<>();
+
+        if (rfc != null) {
+            parametros.add(cb.equal(root.get("rfc"), rfc));
+        }
+
+        cq.select(root).where(parametros.toArray(Predicate[]::new));
+        TypedQuery<Persona> query = em.createQuery(cq);
+        return query.getSingleResult();
     }
     
 }
