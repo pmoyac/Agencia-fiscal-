@@ -1,14 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
+
+import daos.PersonasDAO;
 
 /**
  *
  * @author adria
  */
 public class formPrincipal extends javax.swing.JFrame {
+
+    private final PersonasDAO persona = new PersonasDAO();
 
     /**
      * Creates new form formPrincipal
@@ -216,7 +216,7 @@ public class formPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModuloPlacasActionPerformed
 
     private void btnInsersionPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsersionPersonasActionPerformed
-        // TODO add your handling code here:
+        persona.insertarPersonas();
     }//GEN-LAST:event_btnInsersionPersonasActionPerformed
 
 
