@@ -4,19 +4,39 @@
  */
 package presentacion;
 
+import daos.PersonasDAO;
+import entidadesJPA.Persona;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author adria
  */
 public class formConsultarPersona extends javax.swing.JFrame {
 
+    private final PersonasDAO persona = new PersonasDAO();
     /**
      * Creates new form formConsultarPersona
      */
     public formConsultarPersona() {
         initComponents();
     }
+    
+    private void buscarRFC(java.awt.event.ActionEvent evt) {                                         
+    String rfc = txtRFC.getText();
+    if (!rfc.isEmpty()) {
+        Persona personaEncontrada = persona.buscarPersonasRFC(rfc);
+        if (personaEncontrada != null) {
+            JOptionPane.showMessageDialog(this, personaEncontrada.toString(), "Persona encontrada", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró ninguna persona con el RFC proporcionado.");
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese un RFC válido.");
+    }
+}
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,7 +53,7 @@ public class formConsultarPersona extends javax.swing.JFrame {
         panelRound1 = new presentacion.PanelRound();
         jLabel3 = new javax.swing.JLabel();
         txtRFC = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
         btnRestaurar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -82,9 +102,14 @@ public class formConsultarPersona extends javax.swing.JFrame {
 
         txtRFC.setFont(new java.awt.Font("Candara", 0, 22)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
-        jButton1.setText("Buscar");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
@@ -96,7 +121,7 @@ public class formConsultarPersona extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnBuscar)
                 .addGap(25, 25, 25))
         );
         panelRound1Layout.setVerticalGroup(
@@ -104,7 +129,7 @@ public class formConsultarPersona extends javax.swing.JFrame {
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
+                    .addComponent(btnBuscar)
                     .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addContainerGap(82, Short.MAX_VALUE))
@@ -187,13 +212,17 @@ public class formConsultarPersona extends javax.swing.JFrame {
         txtRFC.setText("");
     }//GEN-LAST:event_btnRestaurarActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        buscarRFC(evt);
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRestaurar;
     private javax.swing.JButton btnSiguiente;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
