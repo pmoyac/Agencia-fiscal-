@@ -1,6 +1,7 @@
 package entidadesJPA;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Entity;
@@ -20,19 +21,19 @@ public class Persona implements Serializable {
     @Column(name = "RFC", nullable = false, length = 13)
     private String rfc;
 
-    @Column(name = "nombres", nullable = false, length = 50)
+    @Column(name = "nombres", nullable = false, length = 50, columnDefinition = "VARCHAR(50)")
     private String nombres;
     
-    @Column(name = "apellido_paterno", nullable = false, length = 50)
+    @Column(name = "apellido_paterno", nullable = false, length = 50, columnDefinition = "VARCHAR(50)")
     private String apellido_paterno;
     
-    @Column(name = "apellido_materno", nullable = false, length = 50)
+    @Column(name = "apellido_materno", nullable = false, length = 50, columnDefinition = "VARCHAR(50)")
     private String apellido_materno;
     
-    @Column(name = "telefono", nullable = false)
+    @Column(name = "telefono", nullable = false, columnDefinition = "BIGINT")
     private Long telefono;
     
-    @Column(name = "fecha_nacimiento", nullable = false)
+    @Column(name = "fecha_nacimiento", nullable = false, columnDefinition = "DATE")
     @Temporal(TemporalType.DATE)
     private Calendar fechaNacimiento; 
     
@@ -121,14 +122,14 @@ public class Persona implements Serializable {
 
     @Override
     public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String formatoFechaNac = dateFormat.format(fechaNacimiento.getTime());
+
         StringBuilder sb = new StringBuilder();
-        sb.append("Nombre: ").append(nombres + " "+apellido_paterno + " "+apellido_materno);
+        sb.append("Nombre: ").append(nombres).append(" ").append(apellido_paterno).append(" ").append(apellido_materno);
+        sb.append("\nFecha de nacimiento: ").append(formatoFechaNac);
         sb.append("\nTelefono: ").append(telefono);
         return sb.toString();
     }
-
-    
-
-    
     
 }

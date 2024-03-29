@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
 
 import daos.PersonasDAO;
@@ -24,15 +20,28 @@ public class formConsultarPersona extends javax.swing.JFrame {
     
     private void buscarRFC(java.awt.event.ActionEvent evt) {                                         
     String rfc = txtRFC.getText();
-    if (!rfc.isEmpty()) {
-        Persona personaEncontrada = persona.buscarPersonasRFC(rfc);
-        if (personaEncontrada != null) {
-            JOptionPane.showMessageDialog(this, personaEncontrada.toString(), "Persona encontrada", JOptionPane.INFORMATION_MESSAGE);
+    
+    if (rfc.length() != 13) {
+        JOptionPane.showMessageDialog(this, "El RFC debe tener 13 caracteres.", "Longitud incorrecta", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    try {
+        if (!rfc.isEmpty()) {
+            Persona personaEncontrada = persona.buscarPersonasRFC(rfc);
+            
+            if (personaEncontrada != null) {
+                JOptionPane.showMessageDialog(this, personaEncontrada.toString(), 
+                        "Persona encontrada", JOptionPane.INFORMATION_MESSAGE);
+                btnSiguiente.setEnabled(true);
+            } 
         } else {
-            JOptionPane.showMessageDialog(this, "No se encontró ninguna persona con el RFC proporcionado.");
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un RFC", "Campo vacío",
+                    JOptionPane.WARNING_MESSAGE);
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Por favor, ingrese un RFC válido.");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "El RFC proporcionado no se ha encontrado en la"
+                + " base de datos", "Error", JOptionPane.ERROR_MESSAGE); 
     }
 }
 
@@ -138,7 +147,13 @@ public class formConsultarPersona extends javax.swing.JFrame {
         btnSiguiente.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnSiguiente.setText("Siguiente");
         btnSiguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSiguiente.setEnabled(false);
         btnSiguiente.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
 
         btnRestaurar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnRestaurar.setText("Restaurar");
@@ -215,6 +230,10 @@ public class formConsultarPersona extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         buscarRFC(evt);
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSiguienteActionPerformed
 
     
 
