@@ -109,7 +109,7 @@ public class formConsultarPersona extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
         jLabel3.setText("RFC:");
 
-        txtRFC.setFont(new java.awt.Font("Candara", 0, 22)); // NOI18N
+        txtRFC.setFont(new java.awt.Font("Arial", 0, 22)); // NOI18N
 
         btnBuscar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnBuscar.setText("Buscar");
@@ -232,7 +232,9 @@ public class formConsultarPersona extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        // TODO add your handling code here:
+        formTramitarLicencia tramiteLicencia = new formTramitarLicencia();
+        tramiteLicencia.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     

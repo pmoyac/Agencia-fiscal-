@@ -23,7 +23,7 @@ public class Licencia implements Serializable {
     private Long id;
     
     @Column(name = "costo", nullable = false)
-    private Float costo;
+    private float costo;
     
     @Column(name = "fecha_expedicion", nullable = false)
     @Temporal(TemporalType.DATE)

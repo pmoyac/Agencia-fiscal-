@@ -1,5 +1,6 @@
 package entidadesJPA;
 
+import static entidadesJPA.Encriptacion.desencriptarTelefono;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,8 +31,8 @@ public class Persona implements Serializable {
     @Column(name = "apellido_materno", nullable = false, length = 50, columnDefinition = "VARCHAR(50)")
     private String apellido_materno;
     
-    @Column(name = "telefono", nullable = false, columnDefinition = "BIGINT")
-    private Long telefono;
+    @Column(name = "telefono", nullable = false)
+    private String telefono;
     
     @Column(name = "fecha_nacimiento", nullable = false, columnDefinition = "DATE")
     @Temporal(TemporalType.DATE)
@@ -47,7 +48,7 @@ public class Persona implements Serializable {
         this.rfc = rfc;
     }
     
-    public Persona(String nombres, String apellido_paterno, String apellido_materno, Long telefono, Calendar fechaNacimiento) {
+    public Persona(String nombres, String apellido_paterno, String apellido_materno, String telefono, Calendar fechaNacimiento) {
         this.nombres = nombres;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
@@ -55,7 +56,7 @@ public class Persona implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Persona(String rfc, String nombres, String apellido_paterno, String apellido_materno, Long telefono, Calendar fechaNacimiento) {
+    public Persona(String rfc, String nombres, String apellido_paterno, String apellido_materno, String telefono, Calendar fechaNacimiento) {
         this.rfc = rfc;
         this.nombres = nombres;
         this.apellido_paterno = apellido_paterno;
@@ -104,11 +105,11 @@ public class Persona implements Serializable {
         this.apellido_materno = apellido_materno;
     }
 
-    public Long getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(Long telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
@@ -128,7 +129,7 @@ public class Persona implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("Nombre: ").append(nombres).append(" ").append(apellido_paterno).append(" ").append(apellido_materno);
         sb.append("\nFecha de nacimiento: ").append(formatoFechaNac);
-        sb.append("\nTelefono: ").append(telefono);
+        sb.append("\nTelefono: ").append(desencriptarTelefono(telefono));
         return sb.toString();
     }
     
