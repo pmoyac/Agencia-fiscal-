@@ -31,6 +31,7 @@ public class formPrincipal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        btnSalir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         panelRound1 = new presentacion.PanelRound();
         btnModuloLicencias = new javax.swing.JButton();
@@ -56,6 +57,17 @@ public class formPrincipal extends javax.swing.JFrame {
         jLabel1.setText("Agencia Fiscal JV");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 14, 700, 64));
+
+        btnSalir.setBackground(new java.awt.Color(196, 68, 89));
+        btnSalir.setIcon(new javax.swing.ImageIcon("C:\\Users\\adria\\OneDrive\\Documentos\\GitHub\\Agencia-fiscal-\\ProyectoPresentacion\\src\\main\\java\\imagenes\\salir.png")); // NOI18N
+        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalir.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 10, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 70));
 
@@ -222,6 +234,10 @@ public class formPrincipal extends javax.swing.JFrame {
         persona.insertarPersonas();
     }//GEN-LAST:event_btnInsersionPersonasActionPerformed
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInsersionPersonas;
@@ -229,6 +245,7 @@ public class formPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnModuloLicencias;
     private javax.swing.JButton btnModuloPlacas;
     private javax.swing.JButton btnModuloReportes;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

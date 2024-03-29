@@ -4,6 +4,10 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entidadesJPA.Persona</class>
     <class>entidadesJPA.Licencia</class>
+    <class>entidadesJPA.Tramite</class>
+    <class>entidadesJPA.Placa</class>
+    <class>entidadesJPA.Vehiculo</class>
+    <class>entidadesJPA.Automovil</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/agenciafiscaljv?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

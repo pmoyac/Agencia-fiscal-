@@ -19,7 +19,7 @@ public class Persona implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "RFC", nullable = false, length = 13)
+    @Column(name = "rfc", nullable = false, length = 13)
     private String rfc;
 
     @Column(name = "nombres", nullable = false, length = 50, columnDefinition = "VARCHAR(50)")
@@ -38,8 +38,11 @@ public class Persona implements Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar fechaNacimiento; 
     
-    @OneToMany(mappedBy = "persona", targetEntity = Licencia.class)
-    private List<Licencia> licencia;
+    @OneToMany(mappedBy = "persona", targetEntity = Tramite.class)
+    private List<Tramite> tramite;
+    
+    @OneToMany(mappedBy = "persona", targetEntity = Vehiculo.class)
+    private List<Vehiculo> vehiculo;
     
     public Persona() {
     }
@@ -65,12 +68,20 @@ public class Persona implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public List<Licencia> getLicencia() {
-        return licencia;
+    public List<Vehiculo> getVehiculo() {
+        return vehiculo;
     }
 
-    public void setLicencia(List<Licencia> licencia) {
-        this.licencia = licencia;
+    public void setVehiculo(List<Vehiculo> vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+    
+    public List<Tramite> getTramite() {
+        return tramite;
+    }
+
+    public void setTramite(List<Tramite> tramite) {
+        this.tramite = tramite;
     }
     
     public String getRfc() {
