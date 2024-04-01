@@ -8,6 +8,5 @@ import entidadesJPA.Persona;
  */
 public interface ILicenciasDAO {
     
-    public void tramitarLicencia(Persona persona);
     
 }

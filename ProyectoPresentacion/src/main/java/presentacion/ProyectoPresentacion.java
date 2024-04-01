@@ -1,5 +1,7 @@
 package presentacion;
 
+import interfaz.formPrincipal;
+
 /**
  *
  * @author adria
