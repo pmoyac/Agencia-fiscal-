@@ -124,14 +124,20 @@ public class Persona implements Serializable {
         this.telefono = telefono;
     }
 
-    public Calendar getFechaNacimiento() {
-        return fechaNacimiento;
+    public String getFechaNacimiento() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String formatoFechaNac = dateFormat.format(fechaNacimiento.getTime());
+        return formatoFechaNac;
     }
 
     public void setFechaNacimiento(Calendar fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public String getTelefonoDesencriptado() {
+        return desencriptarTelefono(telefono);
+    }
+    
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

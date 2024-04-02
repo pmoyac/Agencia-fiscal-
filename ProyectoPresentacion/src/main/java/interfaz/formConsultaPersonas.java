@@ -1,22 +1,59 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
+
+import daos.PersonasDAO;
+import entidadesJPA.Persona;
+import java.awt.Component;
+import java.awt.Font;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
  * @author adria
  */
 public class formConsultaPersonas extends javax.swing.JFrame {
-
+    
+    private PersonasDAO personaDAO;
+    
     /**
      * Creates new form formConsultaPersonas
      */
     public formConsultaPersonas() {
         initComponents();
+        tablaPersonas.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
+        tablaPersonas.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        ajustarAlturaFilas(tablaPersonas);
+        personaDAO = new PersonasDAO();
+    }
+    
+    private void ajustarAlturaFilas(JTable table) {
+        for (int row = 0; row < table.getRowCount(); row++) {
+            int rowHeight = table.getRowHeight();
+
+            for (int column = 0; column < table.getColumnCount(); column++) {
+                TableCellRenderer renderer = table.getCellRenderer(row, column);
+                Component comp = table.prepareRenderer(renderer, row, column);
+                rowHeight = Math.max(rowHeight, comp.getPreferredSize().height);
+            }
+
+            table.setRowHeight(row, rowHeight);
+        }
     }
 
+    private void actualizarTabla(List<Persona> personas) {
+        DefaultTableModel model = (DefaultTableModel) tablaPersonas.getModel();
+        model.setRowCount(0); // Limpiar la tabla
+
+        for (Persona persona : personas) {
+            model.addRow(new Object[]{persona.getRfc(), persona.getNombres() +" "+persona.getApellido_paterno()
+                    +" "+persona.getApellido_materno(),
+                persona.getFechaNacimiento(), persona.getTelefonoDesencriptado()});
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,6 +135,7 @@ public class formConsultaPersonas extends javax.swing.JFrame {
 
         txtAnioNac.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
 
+        tablaPersonas.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         tablaPersonas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -106,7 +144,7 @@ public class formConsultaPersonas extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "RFC", "Nombre", "Fecha de nac.", "Teléfono"
             }
         ));
         jScrollPane1.setViewportView(tablaPersonas);
@@ -157,6 +195,11 @@ public class formConsultaPersonas extends javax.swing.JFrame {
         btnBuscar.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnSiguiente.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnSiguiente.setText("Siguiente");
@@ -231,45 +274,32 @@ public class formConsultaPersonas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        formHistorial historial = new formHistorial();
-        historial.setVisible(true);
-        dispose();
+        if (tablaPersonas.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Por favor, seleccione una persona.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String RFC = tablaPersonas.getValueAt(tablaPersonas.getSelectedRow(), 0).toString();
+            formHistorial historial = new formHistorial(RFC);
+            historial.setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(formConsultaPersonas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(formConsultaPersonas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(formConsultaPersonas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(formConsultaPersonas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String rfc = txtRFC.getText();
+        String nombreCompleto = txtNombreCompleto.getText();       
+        int anioNacimiento = 0;
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new formConsultaPersonas().setVisible(true);
-            }
-        });
-    }
+        String anioNacText = txtAnioNac.getText();
+        if (!anioNacText.isEmpty()) {
+            anioNacimiento = Integer.parseInt(anioNacText);
+        } 
+
+        List<Persona> personas = personaDAO.buscarPersonas(rfc, nombreCompleto, anioNacimiento);
+
+        actualizarTabla(personas);
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

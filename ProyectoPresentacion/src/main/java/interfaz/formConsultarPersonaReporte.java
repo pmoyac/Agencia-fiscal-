@@ -1,15 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
+
+import daos.PersonasDAO;
+import entidadesJPA.Persona;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author adria
  */
 public class formConsultarPersonaReporte extends javax.swing.JFrame {
-
+    private final PersonasDAO persona = new PersonasDAO();
+    
     /**
      * Creates new form formConsultarPersonaReporte
      */
@@ -17,6 +18,33 @@ public class formConsultarPersonaReporte extends javax.swing.JFrame {
         initComponents();
     }
 
+    private void buscarRFC(java.awt.event.ActionEvent evt) {
+        String rfc = txtRFC.getText();
+
+        if (rfc.length() != 13) {
+            JOptionPane.showMessageDialog(this, "El RFC debe tener 13 caracteres.", "Longitud incorrecta", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            if (!rfc.isEmpty()) {
+                Persona personaEncontrada = persona.buscarPersonasRFC(rfc);
+
+                if (personaEncontrada != null) {
+                    JOptionPane.showMessageDialog(this, personaEncontrada.toString(),
+                            "Persona encontrada", JOptionPane.INFORMATION_MESSAGE);
+                    btnSiguiente.setEnabled(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un RFC", "Campo vacío",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "El RFC proporcionado no se ha encontrado en la"
+                    + " base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -148,6 +176,7 @@ public class formConsultarPersonaReporte extends javax.swing.JFrame {
         btnSiguiente.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnSiguiente.setText("Siguiente");
         btnSiguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSiguiente.setEnabled(false);
         btnSiguiente.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,43 +247,9 @@ public class formConsultarPersonaReporte extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        buscarRFC(evt);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(formConsultarPersonaReporte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(formConsultarPersonaReporte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(formConsultarPersonaReporte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(formConsultarPersonaReporte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new formConsultarPersonaReporte().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

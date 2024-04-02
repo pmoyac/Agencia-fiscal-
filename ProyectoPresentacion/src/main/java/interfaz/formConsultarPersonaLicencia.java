@@ -18,32 +18,32 @@ public class formConsultarPersonaLicencia extends javax.swing.JFrame {
         initComponents();
     }
     
-    private void buscarRFC(java.awt.event.ActionEvent evt) {                                         
-    String rfc = txtRFC.getText();
-    
-    if (rfc.length() != 13) {
-        JOptionPane.showMessageDialog(this, "El RFC debe tener 13 caracteres.", "Longitud incorrecta", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    
-    try {
-        if (!rfc.isEmpty()) {
-            Persona personaEncontrada = persona.buscarPersonasRFC(rfc);
-            
-            if (personaEncontrada != null) {
-                JOptionPane.showMessageDialog(this, personaEncontrada.toString(), 
-                        "Persona encontrada", JOptionPane.INFORMATION_MESSAGE);
-                btnSiguiente.setEnabled(true);
-            } 
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un RFC", "Campo vacío",
-                    JOptionPane.WARNING_MESSAGE);
+    private void buscarRFC(java.awt.event.ActionEvent evt) {
+        String rfc = txtRFC.getText();
+
+        if (rfc.length() != 13) {
+            JOptionPane.showMessageDialog(this, "El RFC debe tener 13 caracteres.", "Longitud incorrecta", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "El RFC proporcionado no se ha encontrado en la"
-                + " base de datos", "Error", JOptionPane.ERROR_MESSAGE); 
+
+        try {
+            if (!rfc.isEmpty()) {
+                Persona personaEncontrada = persona.buscarPersonasRFC(rfc);
+
+                if (personaEncontrada != null) {
+                    JOptionPane.showMessageDialog(this, personaEncontrada.toString(),
+                            "Persona encontrada", JOptionPane.INFORMATION_MESSAGE);
+                    btnSiguiente.setEnabled(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un RFC", "Campo vacío",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "El RFC proporcionado no se ha encontrado en la"
+                    + " base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
-}
 
     
     /**
