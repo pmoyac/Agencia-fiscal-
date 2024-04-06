@@ -16,7 +16,7 @@ public class formSolicitarPlacas extends javax.swing.JFrame {
      */
     public formSolicitarPlacas() {
         initComponents();
-        
+
         tablaCostosPlacas.getTableHeader().setFont(new Font("Candara", Font.BOLD, 20));
         tablaCostosPlacas.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         ajustarAlturaFilas(tablaCostosPlacas);
@@ -35,7 +35,7 @@ public class formSolicitarPlacas extends javax.swing.JFrame {
             table.setRowHeight(row, rowHeight);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -227,7 +227,6 @@ public class formSolicitarPlacas extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnUsadoActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

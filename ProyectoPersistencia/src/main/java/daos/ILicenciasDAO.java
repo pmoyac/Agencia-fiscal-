@@ -8,6 +8,6 @@ import entidadesJPA.Persona;
  */
 public interface ILicenciasDAO {
     
-    public void insertarLicencia();
+    public void insertarLicencia(Persona persona, int vigencia, Double costo, String tipo);
     
 }

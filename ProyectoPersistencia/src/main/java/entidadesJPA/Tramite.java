@@ -35,7 +35,7 @@ public abstract class Tramite implements Serializable {
     private Double costo;
     
     @ManyToOne
-    @JoinColumn(name = "rfc", nullable = false)
+    @JoinColumn(name = "rfc_persona", nullable = false)
     private Persona persona;
 
     public Tramite() {

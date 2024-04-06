@@ -30,18 +30,17 @@ public class Licencia extends Tramite {
     
     @Column(name = "tipo", nullable = false)
     private String tipoLicencia;
-    
-    @ManyToOne
-    @JoinColumn(name = "rfc")
-    public Persona persona;
 
     public Licencia() {
+        setTipo("Licencia");
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -62,14 +61,6 @@ public class Licencia extends Tramite {
         this.tipoLicencia = tipoLicencia;
     }
 
-    public Persona getPersona() {
-        return persona;
-    }
-
-    public void setPersona(Persona persona) {
-        this.persona = persona;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -77,7 +68,6 @@ public class Licencia extends Tramite {
         sb.append("id=").append(id);
         sb.append(", vigencia=").append(vigencia);
         sb.append(", tipoLicencia=").append(tipoLicencia);
-        sb.append(", persona=").append(persona);
         sb.append('}');
         return sb.toString();
     }

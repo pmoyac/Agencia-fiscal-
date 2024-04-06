@@ -233,7 +233,7 @@ public class formConsultarPersonaLicencia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        formTramitarLicencia tramiteLicencia = new formTramitarLicencia();
+        formTramitarLicencia tramiteLicencia = new formTramitarLicencia(txtRFC.getText());
         tramiteLicencia.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnSiguienteActionPerformed

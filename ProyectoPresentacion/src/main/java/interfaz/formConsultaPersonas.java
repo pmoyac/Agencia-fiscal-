@@ -17,7 +17,7 @@ import javax.swing.table.TableCellRenderer;
 public class formConsultaPersonas extends javax.swing.JFrame {
     
     private PersonasDAO personaDAO;
-    
+
     /**
      * Creates new form formConsultaPersonas
      */
@@ -28,7 +28,7 @@ public class formConsultaPersonas extends javax.swing.JFrame {
         ajustarAlturaFilas(tablaPersonas);
         personaDAO = new PersonasDAO();
     }
-    
+
     private void ajustarAlturaFilas(JTable table) {
         for (int row = 0; row < table.getRowCount(); row++) {
             int rowHeight = table.getRowHeight();
@@ -48,12 +48,12 @@ public class formConsultaPersonas extends javax.swing.JFrame {
         model.setRowCount(0); // Limpiar la tabla
 
         for (Persona persona : personas) {
-            model.addRow(new Object[]{persona.getRfc(), persona.getNombres() +" "+persona.getApellido_paterno()
-                    +" "+persona.getApellido_materno(),
+            model.addRow(new Object[]{persona.getRfc(), persona.getNombres() + " " + persona.getApellido_paterno()
+                + " " + persona.getApellido_materno(),
                 persona.getFechaNacimiento(), persona.getTelefonoDesencriptado()});
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -147,6 +147,7 @@ public class formConsultaPersonas extends javax.swing.JFrame {
                 "RFC", "Nombre", "Fecha de nac.", "Teléfono"
             }
         ));
+        tablaPersonas.setEnabled(false);
         jScrollPane1.setViewportView(tablaPersonas);
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
@@ -286,20 +287,19 @@ public class formConsultaPersonas extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String rfc = txtRFC.getText();
-        String nombreCompleto = txtNombreCompleto.getText();       
+        String nombreCompleto = txtNombreCompleto.getText();
         int anioNacimiento = 0;
 
         String anioNacText = txtAnioNac.getText();
         if (!anioNacText.isEmpty()) {
             anioNacimiento = Integer.parseInt(anioNacText);
-        } 
+        }
 
         List<Persona> personas = personaDAO.buscarPersonas(rfc, nombreCompleto, anioNacimiento);
 
         actualizarTabla(personas);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
