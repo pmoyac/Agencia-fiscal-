@@ -17,9 +17,11 @@ import javax.swing.table.TableCellRenderer;
  * @author adria
  */
 public class formTramitarLicencia extends javax.swing.JFrame {
+
     private final ILicenciasDAO licenciaDAO = new LicenciasDAO();
     private final String rfc;
     private final IPersonasDAO personaDAO = new PersonasDAO();
+    formPrincipal principal = new formPrincipal();
     
     /**
      * Creates new form formTramitarLicencia
@@ -27,7 +29,7 @@ public class formTramitarLicencia extends javax.swing.JFrame {
     public formTramitarLicencia(String rfc) {
         initComponents();
         this.rfc = rfc;
-       
+
         tablaCostosLicencias.getTableHeader().setFont(new Font("Candara", Font.BOLD, 20));
         tablaCostosLicencias.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         ajustarAlturaFilas(tablaCostosLicencias);
@@ -46,7 +48,7 @@ public class formTramitarLicencia extends javax.swing.JFrame {
             table.setRowHeight(row, rowHeight);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -176,6 +178,7 @@ public class formTramitarLicencia extends javax.swing.JFrame {
 
         btnAceptar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnAceptar.setText("Aceptar");
+        btnAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -184,6 +187,7 @@ public class formTramitarLicencia extends javax.swing.JFrame {
 
         btnCancelar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -236,60 +240,71 @@ public class formTramitarLicencia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        
         Persona persona = personaDAO.buscarPersonasRFC(rfc);
+        
+        if(licenciaDAO.validarVigencia(rfc)){
+            
+            int opcion = JOptionPane.showConfirmDialog(this, "Usted ya cuenta con una licencia activa. "
+                + "¿Desea tramitar una nueva?", "Aviso", JOptionPane.YES_NO_OPTION);
+            
+            if(opcion == JOptionPane.NO_OPTION){
+                principal.setVisible(true);
+                dispose();
+                return;
+            }
+        }
+        
         String vig = cboVigencia.getSelectedItem().toString();
         int vigencia = 0;
         int discapacidad = 0;
-        String estado = "Sin discapacidad";
+        String estadoDisc = "Sin discapacidad";
         Double costo = 0.0;
-        
-        if(chkDiscapacitado.isSelected()){
+
+        if (chkDiscapacitado.isSelected()) {
             discapacidad = 1;
-            estado = "Discapacitado";
+            estadoDisc = "Discapacitado";
         }
-        
-        switch(vig){
+
+        switch (vig) {
             case "1 año":
-                vigencia=1;
-                if(discapacidad==1){
+                vigencia = 1;
+                if (discapacidad == 1) {
                     costo = 200.0;
-                }else{
+                } else {
                     costo = 600.0;
                 }
                 break;
             case "2 años":
-                vigencia=2;
-                if(discapacidad==1){
+                vigencia = 2;
+                if (discapacidad == 1) {
                     costo = 500.0;
-                }else{
+                } else {
                     costo = 900.0;
                 }
                 break;
             case "3 años":
-                vigencia=3;
-                if(discapacidad==1){
+                vigencia = 3;
+                if (discapacidad == 1) {
                     costo = 700.0;
-                }else{
+                } else {
                     costo = 1100.0;
                 }
                 break;
         }
 
-        licenciaDAO.insertarLicencia(persona, vigencia, costo, estado);
-        JOptionPane.showMessageDialog(this, 
-                "Nombre: " +persona.getNombres()+" "+persona.getApellido_paterno()+" "+persona.getApellido_materno()
-                +"\nVigencia: " +cboVigencia.getSelectedItem().toString()
-                +"\nTipo: "+estado
-                +"\nCosto: "+costo,
-                "Trámite de licencia exitoso", 
+        licenciaDAO.insertarLicencia(persona, vigencia, costo, estadoDisc);
+        JOptionPane.showMessageDialog(this,
+                "Nombre: " + persona.getNombres() + " " + persona.getApellido_paterno() + " " + persona.getApellido_materno()
+                + "\nVigencia: " + cboVigencia.getSelectedItem().toString()
+                + "\nTipo: " + estadoDisc
+                + "\nCosto: " + costo,
+                "Trámite de licencia exitoso",
                 JOptionPane.INFORMATION_MESSAGE);
-        formPrincipal principal = new formPrincipal();
+        
         principal.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;

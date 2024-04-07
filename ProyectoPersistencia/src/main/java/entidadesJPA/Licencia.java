@@ -30,6 +30,9 @@ public class Licencia extends Tramite {
     
     @Column(name = "tipo", nullable = false)
     private String tipoLicencia;
+    
+    @Column(name = "estado", nullable = false)
+    private String estado;
 
     public Licencia() {
         setTipo("Licencia");
@@ -61,6 +64,14 @@ public class Licencia extends Tramite {
         this.tipoLicencia = tipoLicencia;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

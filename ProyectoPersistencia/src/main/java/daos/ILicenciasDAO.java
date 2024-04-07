@@ -10,4 +10,5 @@ public interface ILicenciasDAO {
     
     public void insertarLicencia(Persona persona, int vigencia, Double costo, String tipo);
     
+    public boolean validarVigencia(String rfc);
 }
