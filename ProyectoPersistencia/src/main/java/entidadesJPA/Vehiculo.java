@@ -1,5 +1,6 @@
 package entidadesJPA;
 
+import static entidadesJPA.Automovil_.*;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ public class Vehiculo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_vehiculo", nullable = false)
+    @Column(name = "num_serie", nullable = false)
     private Long id;
     
     @ManyToOne
@@ -27,6 +28,13 @@ public class Vehiculo implements Serializable {
 
     public Vehiculo() {
     }
+
+    public Vehiculo(Long id, Persona persona) {
+        this.id = id;
+        this.persona = persona;
+    }
+    
+    
 
     public Long getId() {
         return id;
@@ -43,13 +51,18 @@ public class Vehiculo implements Serializable {
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
+    
+    
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Vehiculo{");
-        sb.append("id=").append(id);
-        sb.append(", persona=").append(persona);
+        sb.append("numeroSerie=").append(id);
+        sb.append(", color=").append(color);
+        sb.append(", modelo=").append(modelo);
+        sb.append(", linea=").append(linea);
+        sb.append(", marca=").append(marca);
+        sb.append(", persona=").append(persona);        
         sb.append('}');
         return sb.toString();
     }
