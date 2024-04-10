@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
  */
 public class formConsultarPersonaPlaca extends javax.swing.JFrame {
     private final PersonasDAO persona = new PersonasDAO();
-    
+    String rfc;
     /**
      * Creates new form formConsultarPersonaPlaca
      */
@@ -19,7 +19,7 @@ public class formConsultarPersonaPlaca extends javax.swing.JFrame {
     }
 
     private void buscarRFC(java.awt.event.ActionEvent evt) {
-        String rfc = txtRFC.getText();
+        rfc = txtRFC.getText();
 
         if (rfc.length() != 13) {
             JOptionPane.showMessageDialog(this, "El RFC debe tener 13 caracteres.", "Longitud incorrecta", JOptionPane.WARNING_MESSAGE);
@@ -232,7 +232,7 @@ public class formConsultarPersonaPlaca extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        formSolicitarPlacas placas = new formSolicitarPlacas();
+        formSolicitarPlacas placas = new formSolicitarPlacas(this.rfc);
         placas.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnSiguienteActionPerformed
