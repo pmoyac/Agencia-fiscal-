@@ -14,136 +14,72 @@ import javax.persistence.*;
  * @author adria
  */
 @Entity
+@PrimaryKeyJoinColumn(name = "id_tramite_licencia")
+@DiscriminatorValue("Licencia")
 @Table(name = "licencias")
-public class Licencia implements Serializable {
+public class Licencia extends Tramite {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
     
-    @Column(name = "costo", nullable = false)
-    private Float costo;
-    
-    @Column(name = "fecha_expedicion", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Calendar fecha_expedicion;
-    
     @Column(name = "vigencia", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Calendar vigencia;
+    private Integer vigencia;
     
-    @Column(name = "tipo", nullable = false, length = 15)
-    private String tipo;
+    @Column(name = "tipo", nullable = false)
+    private String tipoLicencia;
     
-    @ManyToOne
-    @JoinColumn(name = "rfc")
-    public Persona persona;
+    @Column(name = "estado", nullable = false)
+    private String estado;
 
     public Licencia() {
+        setTipo("Licencia");
     }
 
-    public Licencia(Long id) {
-        this.id = id;
-    }
-
-    public Licencia(Long id, Float costo, Calendar fecha_expedicion, Calendar vigencia, String tipo, Persona persona) {
-        this.id = id;
-        this.costo = costo;
-        this.fecha_expedicion = fecha_expedicion;
-        this.vigencia = vigencia;
-        this.tipo = tipo;
-        this.persona = persona;
-    }
-
-    public Licencia(Float costo, Calendar fecha_expedicion, Calendar vigencia, String tipo, Persona persona) {
-        this.costo = costo;
-        this.fecha_expedicion = fecha_expedicion;
-        this.vigencia = vigencia;
-        this.tipo = tipo;
-        this.persona = persona;
-    }
-
-    public Licencia(Float costo, Calendar fecha_expedicion, Calendar vigencia, String tipo) {
-        this.costo = costo;
-        this.fecha_expedicion = fecha_expedicion;
-        this.vigencia = vigencia;
-        this.tipo = tipo;
-    }
-    
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Float getCosto() {
-        return costo;
-    }
-
-    public void setCosto(Float costo) {
-        this.costo = costo;
-    }
-
-    public Calendar getFecha_expedicion() {
-        return fecha_expedicion;
-    }
-
-    public void setFecha_expedicion(Calendar fecha_expedicion) {
-        this.fecha_expedicion = fecha_expedicion;
-    }
-
-    public Calendar getVigencia() {
+    public Integer getVigencia() {
         return vigencia;
     }
 
-    public void setVigencia(Calendar vigencia) {
+    public void setVigencia(Integer vigencia) {
         this.vigencia = vigencia;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getTipoLicencia() {
+        return tipoLicencia;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipoLicencia(String tipoLicencia) {
+        this.tipoLicencia = tipoLicencia;
     }
 
-    public Persona getPersona() {
-        return persona;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setPersona(Persona persona) {
-        this.persona = persona;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Licencia other = (Licencia) obj;
-        return Objects.equals(this.id, other.id);
-    }
-
-    @Override
-    public String toString() {
-        return "Licencia{" + "id=" + id + ", costo=" + costo + ", fecha_expedicion=" + fecha_expedicion + ", vigencia=" + vigencia + ", tipo=" + tipo + ", persona=" + persona + '}';
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Licencia{");
+        sb.append("id=").append(id);
+        sb.append(", vigencia=").append(vigencia);
+        sb.append(", tipoLicencia=").append(tipoLicencia);
+        sb.append('}');
+        return sb.toString();
+    }
 }
