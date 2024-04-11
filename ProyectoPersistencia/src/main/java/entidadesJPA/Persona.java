@@ -1,6 +1,8 @@
 package entidadesJPA;
 
+import static entidadesJPA.Encriptacion.desencriptarTelefono;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Entity;
@@ -17,27 +19,30 @@ public class Persona implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "RFC", nullable = false, length = 13)
+    @Column(name = "rfc", nullable = false, length = 13)
     private String rfc;
 
-    @Column(name = "nombres", nullable = false, length = 50)
+    @Column(name = "nombres", nullable = false, length = 50, columnDefinition = "VARCHAR(50)")
     private String nombres;
     
-    @Column(name = "apellido_paterno", nullable = false, length = 50)
+    @Column(name = "apellido_paterno", nullable = false, length = 50, columnDefinition = "VARCHAR(50)")
     private String apellido_paterno;
     
-    @Column(name = "apellido_materno", nullable = false, length = 50)
+    @Column(name = "apellido_materno", nullable = false, length = 50, columnDefinition = "VARCHAR(50)")
     private String apellido_materno;
     
     @Column(name = "telefono", nullable = false)
-    private Long telefono;
+    private String telefono;
     
-    @Column(name = "fecha_nacimiento", nullable = false)
+    @Column(name = "fecha_nacimiento", nullable = false, columnDefinition = "DATE")
     @Temporal(TemporalType.DATE)
     private Calendar fechaNacimiento; 
     
-    @OneToMany(mappedBy = "persona", targetEntity = Licencia.class)
-    private List<Licencia> licencia;
+    @OneToMany(mappedBy = "persona", targetEntity = Tramite.class)
+    private List<Tramite> tramite;
+    
+    @OneToMany(mappedBy = "persona", targetEntity = Vehiculo.class)
+    private List<Vehiculo> vehiculo;
     
     public Persona() {
     }
@@ -46,7 +51,7 @@ public class Persona implements Serializable {
         this.rfc = rfc;
     }
     
-    public Persona(String nombres, String apellido_paterno, String apellido_materno, Long telefono, Calendar fechaNacimiento) {
+    public Persona(String nombres, String apellido_paterno, String apellido_materno, String telefono, Calendar fechaNacimiento) {
         this.nombres = nombres;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
@@ -54,7 +59,7 @@ public class Persona implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Persona(String rfc, String nombres, String apellido_paterno, String apellido_materno, Long telefono, Calendar fechaNacimiento) {
+    public Persona(String rfc, String nombres, String apellido_paterno, String apellido_materno, String telefono, Calendar fechaNacimiento) {
         this.rfc = rfc;
         this.nombres = nombres;
         this.apellido_paterno = apellido_paterno;
@@ -63,12 +68,20 @@ public class Persona implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public List<Licencia> getLicencia() {
-        return licencia;
+    public List<Vehiculo> getVehiculo() {
+        return vehiculo;
     }
 
-    public void setLicencia(List<Licencia> licencia) {
-        this.licencia = licencia;
+    public void setVehiculo(List<Vehiculo> vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+    
+    public List<Tramite> getTramite() {
+        return tramite;
+    }
+
+    public void setTramite(List<Tramite> tramite) {
+        this.tramite = tramite;
     }
     
     public String getRfc() {
@@ -103,25 +116,38 @@ public class Persona implements Serializable {
         this.apellido_materno = apellido_materno;
     }
 
-    public Long getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(Long telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
-    public Calendar getFechaNacimiento() {
-        return fechaNacimiento;
+    public String getFechaNacimiento() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String formatoFechaNac = dateFormat.format(fechaNacimiento.getTime());
+        return formatoFechaNac;
     }
 
     public void setFechaNacimiento(Calendar fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public String getTelefonoDesencriptado() {
+        return desencriptarTelefono(telefono);
+    }
+    
     @Override
     public String toString() {
-        return "Persona{" + "rfc=" + rfc + ", nombres=" + nombres + ", apellido_paterno=" + apellido_paterno + ", apellido_materno=" + apellido_materno + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + '}';
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String formatoFechaNac = dateFormat.format(fechaNacimiento.getTime());
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nombre: ").append(nombres).append(" ").append(apellido_paterno).append(" ").append(apellido_materno);
+        sb.append("\nFecha de nacimiento: ").append(formatoFechaNac);
+        sb.append("\nTelefono: ").append(desencriptarTelefono(telefono));
+        return sb.toString();
     }
     
 }
