@@ -28,7 +28,7 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
         Persona persona = personaDAO.buscarPersonasRFC(rfc);
         
         Automovil auto = new Automovil();
-        auto.setId(Long.parseLong(this.txtNoSerie.getText()));
+        auto.setId(this.txtNoSerie.getText());
         auto.setColor(this.txtColor.getText());
         auto.setLinea(this.txtLinea.getText());
         auto.setMarca(this.txtMarca.getText());
@@ -267,7 +267,12 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         
+        
         gv.agregarVehiculo(crearAuto());
+        
+        formTramitarPlaca placa = new formTramitarPlaca(rfc, 1500, crearAuto());
+        placa.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
 

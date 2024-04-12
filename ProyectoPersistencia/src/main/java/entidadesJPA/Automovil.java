@@ -10,7 +10,7 @@ import static entidadesJPA.Vehiculo_.*;
  * @author adria
  */
 @Entity
-@PrimaryKeyJoinColumn(name = "id_vehiculo_automovil")
+@PrimaryKeyJoinColumn(name = "num_serie")
 @Table(name="automoviles")
 public class Automovil extends Vehiculo implements Serializable{
 
@@ -40,7 +40,7 @@ public class Automovil extends Vehiculo implements Serializable{
         this.marca = marca;
     }
 
-    public Automovil(Long id, String color, String modelo, String linea, String marca, Persona persona) {
+    public Automovil(String id, String color, String modelo, String linea, String marca, Persona persona) {
         super(id, persona);
         this.color = color;
         this.modelo = modelo;
