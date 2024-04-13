@@ -24,9 +24,9 @@ public class LicenciasDAO implements ILicenciasDAO {
             em.getTransaction().begin();
 
             em.createQuery("UPDATE Licencia l SET l.estado = 'Inactivo' WHERE l.persona = :persona")
-            .setParameter("persona", persona)
-            .executeUpdate();
-            
+                    .setParameter("persona", persona)
+                    .executeUpdate();
+
             Licencia licencia = new Licencia();
             licencia.setVigencia(vigencia);
             licencia.setCosto(costo);
@@ -47,8 +47,10 @@ public class LicenciasDAO implements ILicenciasDAO {
     @Override
     public boolean validarVigencia(String rfc) {
         boolean vigente = false;
-        
+
         try {
+            em.getTransaction().begin();
+
             TypedQuery<Licencia> queryLicencia = em.createQuery("select l from Licencia l "
                     + "inner join l.persona p "
                     + "where p.rfc = :rfc "
@@ -56,17 +58,22 @@ public class LicenciasDAO implements ILicenciasDAO {
             queryLicencia.setParameter("rfc", rfc);
             queryLicencia.setMaxResults(1);
             Licencia licencia = queryLicencia.getSingleResult();
-            
+
             Calendar fechaVencimiento = Calendar.getInstance();
             fechaVencimiento.add(Calendar.YEAR, licencia.getVigencia());
             Calendar fechaActual = Calendar.getInstance();
-            
+
             if (fechaVencimiento.after(fechaActual)) {
                 vigente = true;
             }
+
+            em.getTransaction().commit();
         } catch (Exception e) {
-            em.getTransaction().rollback();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
         }
+
         return vigente;
     }
 
