@@ -10,6 +10,7 @@ import entidadesJPA.Persona;
 import entidadesJPA.Placa;
 import java.awt.Component;
 import java.awt.Font;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -23,6 +24,7 @@ import negocio.IRegistroPlacasBO;
  */
 public class formTramitarPlaca extends javax.swing.JFrame {
 
+    private final  IPersonasDAO per = new PersonasDAO();
     private final ILicenciasDAO licenciaDAO = new LicenciasDAO();
     private final IRegistroPlacasBO placasbo = new RegistroPlacasBO();
     private final String rfc; 
@@ -35,6 +37,7 @@ public class formTramitarPlaca extends javax.swing.JFrame {
      * Creates new form formTramitarLicencia
      * @param rfc
      * @param costo
+     * @param auto
      */
     public formTramitarPlaca(String rfc, double costo, Automovil auto) {
         initComponents();
@@ -234,12 +237,20 @@ public class formTramitarPlaca extends javax.swing.JFrame {
 
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
         Placa p = new Placa();
+        Automovil  a = new Automovil();
+        Persona persona = per.buscarPersonasRFC(rfc);
+        
+       
+       p.setTipo("Placa");
+       p.setPersona(persona);
        p.setAutomovil(auto);
        p.setCosto(costo);
-       p.setFecha_recepcion(new GregorianCalendar());
+       p.setFecha_recepcion(Calendar.getInstance());
+       p.setFecha(new GregorianCalendar());
        p.setEstado("Activa");
        
-       placasbo.registrarPlacaBO(p);
+       
+       placasbo.registrarPlacaBO(p, rfc);
        
         
 //        placasbo.registrarPlacaBO(placa);

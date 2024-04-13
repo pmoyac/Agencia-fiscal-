@@ -11,5 +11,5 @@ import entidadesJPA.Placa;
  * @author Pedro
  */
 public interface IRegistroPlacasBO {
-    public void registrarPlacaBO(Placa placa);
+    public void registrarPlacaBO(Placa placa, String rfc);
 }
