@@ -11,15 +11,25 @@ import javax.swing.table.TableCellRenderer;
  */
 public class formSolicitarPlacas extends javax.swing.JFrame {
 
+    private final String rfc;
+
     /**
      * Creates new form formSolicitarPlacas
      */
+
     public formSolicitarPlacas() {
+        initComponents();
+        this.rfc = null;
+
+    }
+
+    public formSolicitarPlacas(String rfc) {
         initComponents();
 
         tablaCostosPlacas.getTableHeader().setFont(new Font("Candara", Font.BOLD, 20));
         tablaCostosPlacas.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         ajustarAlturaFilas(tablaCostosPlacas);
+        this.rfc = rfc;
     }
 
     private void ajustarAlturaFilas(JTable table) {
@@ -216,7 +226,7 @@ public class formSolicitarPlacas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        formAutomovilNuevo autoNuevo = new formAutomovilNuevo();
+        formAutomovilNuevo autoNuevo = new formAutomovilNuevo(rfc);
         autoNuevo.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnNuevoActionPerformed

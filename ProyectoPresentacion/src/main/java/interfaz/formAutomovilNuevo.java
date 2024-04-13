@@ -1,16 +1,41 @@
 package interfaz;
 
+import daos.IPersonasDAO;
+import daos.PersonasDAO;
+import dto.GestorVehiculoBO;
+import entidadesJPA.Automovil;
+import entidadesJPA.Persona;
+import negocio.IGestorVehiculosBO;
+
 /**
  *
  * @author adria
  */
 public class formAutomovilNuevo extends javax.swing.JFrame {
 
+    private final IPersonasDAO personaDAO = new PersonasDAO();
+    private final String rfc;
+    private final IGestorVehiculosBO gv = new GestorVehiculoBO();
     /**
      * Creates new form formAutomovilNuevo
      */
-    public formAutomovilNuevo() {
+    public formAutomovilNuevo(String rfc) {
         initComponents();
+        this.rfc = rfc;
+    }
+    
+    public Automovil crearAuto(){
+        Persona persona = personaDAO.buscarPersonasRFC(rfc);
+        
+        Automovil auto = new Automovil();
+        auto.setId(this.txtNoSerie.getText());
+        auto.setColor(this.txtColor.getText());
+        auto.setLinea(this.txtLinea.getText());
+        auto.setMarca(this.txtMarca.getText());
+        auto.setModelo(this.txtModelo.getText());
+        auto.setPersona(persona);
+        
+        return auto;
     }
 
     /**
@@ -159,6 +184,11 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
         btnRegistrar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnRegistrar.setText("Registrar");
         btnRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         btnRestaurar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnRestaurar.setText("Restaurar");
@@ -222,7 +252,7 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        formSolicitarPlacas solicitarP = new formSolicitarPlacas();
+        formSolicitarPlacas solicitarP = new formSolicitarPlacas(rfc);
         solicitarP.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -234,6 +264,16 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
         txtColor.setText("");
         txtModelo.setText("");
     }//GEN-LAST:event_btnRestaurarActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        
+        
+        gv.agregarVehiculo(crearAuto());
+        
+        formTramitarPlaca placa = new formTramitarPlaca(rfc, 1500, crearAuto());
+        placa.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

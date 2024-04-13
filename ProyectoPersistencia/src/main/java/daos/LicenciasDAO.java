@@ -49,6 +49,7 @@ public class LicenciasDAO implements ILicenciasDAO {
         boolean vigente = false;
         
         try {
+            em.getTransaction().begin();
             TypedQuery<Licencia> queryLicencia = em.createQuery("select l from Licencia l "
                     + "inner join l.persona p "
                     + "where p.rfc = :rfc "
@@ -64,6 +65,7 @@ public class LicenciasDAO implements ILicenciasDAO {
             if (fechaVencimiento.after(fechaActual)) {
                 vigente = true;
             }
+            em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
         }
