@@ -46,7 +46,7 @@ public class Placa extends Tramite {
     private String estado;
     
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "id_automovil", nullable = false)
     private Automovil automovil;
 
     public Placa() {

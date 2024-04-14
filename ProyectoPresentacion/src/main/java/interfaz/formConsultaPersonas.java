@@ -147,7 +147,6 @@ public class formConsultaPersonas extends javax.swing.JFrame {
                 "RFC", "Nombre", "Fecha de nac.", "Teléfono"
             }
         ));
-        tablaPersonas.setEnabled(false);
         jScrollPane1.setViewportView(tablaPersonas);
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
@@ -279,9 +278,17 @@ public class formConsultaPersonas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Por favor, seleccione una persona.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             String RFC = tablaPersonas.getValueAt(tablaPersonas.getSelectedRow(), 0).toString();
-            formHistorial historial = new formHistorial(RFC);
-            historial.setVisible(true);
-            dispose();
+
+            PersonasDAO personasDAO = new PersonasDAO();
+            Persona personaSeleccionada = personasDAO.buscarPersonasRFC(RFC);
+
+            if (personaSeleccionada != null) {
+                formHistorial historial = new formHistorial(personaSeleccionada);
+                historial.setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró la persona correspondiente al RFC seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 

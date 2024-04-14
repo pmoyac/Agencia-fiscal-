@@ -1,20 +1,45 @@
 package interfaz;
 
+import daos.ILicenciasDAO;
+import daos.IPersonasDAO;
+import daos.LicenciasDAO;
+import daos.PersonasDAO;
+import entidadesJPA.Licencia;
 import entidadesJPA.Persona;
+import java.awt.Color;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author adria
  */
 public class formHistorial extends javax.swing.JFrame {
+    private final Persona personaSeleccionada;
+    private final ILicenciasDAO licencia = new LicenciasDAO();
+    
 
     /**
      * Creates new form formHistorial
+     * @param persona
      */
-    public formHistorial(String RFC) {
+    public formHistorial(Persona persona) {
         initComponents();
+        this.personaSeleccionada = persona;
+        
+        if (personaSeleccionada != null) {
+            txtPersona.setText(personaSeleccionada.getNombres() + " " 
+                    + personaSeleccionada.getApellido_paterno() + " " 
+                    + personaSeleccionada.getApellido_materno());
+        }
+        
+        insertarLicencias();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,9 +55,9 @@ public class formHistorial extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtPersona = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaLicencias = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tablaPlacas = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
@@ -76,10 +101,31 @@ public class formHistorial extends javax.swing.JFrame {
 
         txtPersona.setBackground(new java.awt.Color(210, 106, 123));
         txtPersona.setFont(new java.awt.Font("Candara", 1, 24)); // NOI18N
+        txtPersona.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtPersona.setBorder(null);
         txtPersona.setEnabled(false);
+        txtPersona.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        txtPersona.setSelectionColor(new java.awt.Color(0, 0, 0));
+        txtPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPersonaActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaLicencias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Costo", "Estado", "Fecha", "Vigencia"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaLicencias);
+
+        tablaPlacas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -90,20 +136,7 @@ public class formHistorial extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tablaPlacas);
 
         jLabel3.setFont(new java.awt.Font("Candara", 1, 20)); // NOI18N
         jLabel3.setText("Licencias");
@@ -128,8 +161,8 @@ public class formHistorial extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtPersona)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRegresar)
                 .addGap(17, 17, 17))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -153,12 +186,12 @@ public class formHistorial extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 700, 430));
@@ -167,11 +200,33 @@ public class formHistorial extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void insertarLicencias() {
+        DefaultTableModel model = (DefaultTableModel) tablaLicencias.getModel();
+        model.setRowCount(0); 
+
+        List<Licencia> licencias = licencia.obtenerLicencias(personaSeleccionada);
+
+        if (licencias != null && !licencias.isEmpty()) {
+            for (Licencia licencia : licencias) {
+                model.addRow(new Object[]{
+                    licencia.getCosto(),
+                    licencia.getEstado(),
+                    licencia.getFecha(),
+                    licencia.getVigencia()
+                });
+            }
+        }
+    }
+    
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         formConsultaPersonas consultaP = new formConsultaPersonas();
         consultaP.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void txtPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPersonaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPersonaActionPerformed
 
    
 
@@ -185,8 +240,8 @@ public class formHistorial extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tablaLicencias;
+    private javax.swing.JTable tablaPlacas;
     private javax.swing.JTextField txtPersona;
     // End of variables declaration//GEN-END:variables
 }

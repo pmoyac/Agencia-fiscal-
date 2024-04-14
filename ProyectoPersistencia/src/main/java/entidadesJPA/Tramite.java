@@ -1,6 +1,7 @@
 package entidadesJPA;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,8 +50,10 @@ public abstract class Tramite implements Serializable {
         this.tipo = tipo;
     }
 
-    public Calendar getFecha() {
-        return fecha;
+    public String getFecha() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String formatoFecha = dateFormat.format(fecha.getTime());
+        return formatoFecha;
     }
 
     public void setFecha(Calendar fecha) {

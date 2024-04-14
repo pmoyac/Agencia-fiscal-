@@ -3,6 +3,7 @@ package daos;
 import entidadesJPA.Licencia;
 import entidadesJPA.Persona;
 import java.util.Calendar;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -75,6 +76,21 @@ public class LicenciasDAO implements ILicenciasDAO {
         }
 
         return vigente;
+    }
+
+    @Override
+    public List<Licencia> obtenerLicencias(Persona persona) {
+        try {
+            TypedQuery<Licencia> query = em.createQuery(
+                    "select l from Licencia l "
+                    + "where l.persona = :persona",
+                    Licencia.class);
+            query.setParameter("persona", persona);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
     }
 
 }
