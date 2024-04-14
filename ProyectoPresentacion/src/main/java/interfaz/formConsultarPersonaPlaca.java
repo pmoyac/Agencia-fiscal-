@@ -1,7 +1,11 @@
 package interfaz;
 
+import daos.ILicenciasDAO;
+import daos.LicenciasDAO;
 import daos.PersonasDAO;
+import entidadesJPA.Licencia;
 import entidadesJPA.Persona;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -10,16 +14,18 @@ import javax.swing.JOptionPane;
  */
 public class formConsultarPersonaPlaca extends javax.swing.JFrame {
     private final PersonasDAO persona = new PersonasDAO();
-    String rfc;
+    private final ILicenciasDAO licencia = new LicenciasDAO();
+    formPrincipal principal = new formPrincipal();
+
     /**
      * Creates new form formConsultarPersonaPlaca
      */
     public formConsultarPersonaPlaca() {
         initComponents();
     }
-
+        
     private void buscarRFC(java.awt.event.ActionEvent evt) {
-        rfc = txtRFC.getText();
+        String rfc = txtRFC.getText();
 
         if (rfc.length() != 13) {
             JOptionPane.showMessageDialog(this, "El RFC debe tener 13 caracteres.", "Longitud incorrecta", JOptionPane.WARNING_MESSAGE);
@@ -32,16 +38,17 @@ public class formConsultarPersonaPlaca extends javax.swing.JFrame {
 
                 if (personaEncontrada != null) {
                     JOptionPane.showMessageDialog(this, personaEncontrada.toString(),
-                            "Persona encontrada", JOptionPane.INFORMATION_MESSAGE);
+                            "Persona encontrada.", JOptionPane.INFORMATION_MESSAGE);
                     btnSiguiente.setEnabled(true);
+                    txtRFC.setEditable(false);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese un RFC", "Campo vacío",
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un RFC.", "Campo vacío",
                         JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "El RFC proporcionado no se ha encontrado en la"
-                    + " base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+                    + " base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -64,7 +71,6 @@ public class formConsultarPersonaPlaca extends javax.swing.JFrame {
         txtRFC = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
-        btnRestaurar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -168,16 +174,6 @@ public class formConsultarPersonaPlaca extends javax.swing.JFrame {
             }
         });
 
-        btnRestaurar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
-        btnRestaurar.setText("Restaurar");
-        btnRestaurar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnRestaurar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnRestaurar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRestaurarActionPerformed(evt);
-            }
-        });
-
         btnCancelar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -202,13 +198,11 @@ public class formConsultarPersonaPlaca extends javax.swing.JFrame {
                         .addGap(22, 22, 22)
                         .addComponent(jLabel2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
+                        .addGap(162, 162, 162)
                         .addComponent(btnSiguiente)
-                        .addGap(52, 52, 52)
-                        .addComponent(btnRestaurar)
-                        .addGap(43, 43, 43)
+                        .addGap(152, 152, 152)
                         .addComponent(btnCancelar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,7 +214,6 @@ public class formConsultarPersonaPlaca extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSiguiente)
-                    .addComponent(btnRestaurar)
                     .addComponent(btnCancelar))
                 .addGap(70, 70, 70))
         );
@@ -232,17 +225,49 @@ public class formConsultarPersonaPlaca extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        formSolicitarPlacas placas = new formSolicitarPlacas(this.rfc);
-        placas.setVisible(true);
-        dispose();
+        String rfc = txtRFC.getText();
+        Persona personaEncontrada = persona.buscarPersonasRFC(rfc);
+        
+        if (rfc.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Por favor, ingrese un RFC.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try {
+            if (personaEncontrada != null) {
+                boolean licenciaActiva = false;
+                
+                List<Licencia> licencias = licencia.obtenerLicencias(personaEncontrada);
+                for (Licencia licencia : licencias) {
+                    if (licencia.getEstado().equals("Activo")) {
+                        licenciaActiva = true;
+                        break;
+                    }
+                }
+
+                if (licenciaActiva) {
+                    formSolicitarPlacas placas = new formSolicitarPlacas(rfc);
+                    placas.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "La persona ingresada no cuenta con una licencia activa.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                     principal.setVisible(true);
+                     dispose();   
+                }
+            } 
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Ha ocurrido un error al verificar la licencia.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
-    private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
-        txtRFC.setText("");
-    }//GEN-LAST:event_btnRestaurarActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        formPrincipal principal = new formPrincipal();
         principal.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -260,7 +285,6 @@ public class formConsultarPersonaPlaca extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnRestaurar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

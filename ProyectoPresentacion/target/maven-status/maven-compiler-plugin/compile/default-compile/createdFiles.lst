@@ -4,8 +4,8 @@ interfaz\formConsultarPersonaLicencia$4.class
 interfaz\formConsultarPersonaPlaca$1.class
 interfaz\formSolicitarPlacas.class
 interfaz\formPrincipal$1.class
-interfaz\formTramitarPlaca$1.class
 interfaz\formAutomovilNuevo$2.class
+interfaz\formHistorial$2.class
 interfaz\formConsultarPersonaLicencia.class
 interfaz\formConsultarPersonaReporte.class
 interfaz\formPrincipal$5.class
@@ -24,7 +24,6 @@ interfaz\formConsultaPersonas$3.class
 interfaz\formConsultarPersonaLicencia$1.class
 interfaz\formTramitarLicencia.class
 interfaz\formConsultarPersonaPlaca$5.class
-interfaz\formTramitarPlaca.class
 interfaz\formReportes.class
 interfaz\formPrincipal$3.class
 interfaz\formAutomovilUsado$1.class
@@ -41,9 +40,9 @@ interfaz\formReportes$1.class
 interfaz\formAutomovilUsado.class
 interfaz\formPrincipal$7.class
 interfaz\formConsultarPersonaPlaca$4.class
+interfaz\formAutomovilUsado$3.class
 interfaz\formHistorial$1.class
 interfaz\formConsultarPersonaReporte$1.class
-interfaz\formTramitarPlaca$2.class
 interfaz\formAutomovilNuevo$3.class
 interfaz\formConsultarPersonaPlaca.class
 interfaz\formConsultaPersonas$1.class
