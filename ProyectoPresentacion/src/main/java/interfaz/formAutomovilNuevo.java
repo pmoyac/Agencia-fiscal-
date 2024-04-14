@@ -3,9 +3,15 @@ package interfaz;
 import daos.IPersonasDAO;
 import daos.PersonasDAO;
 import dto.GestorVehiculoBO;
+import dto.RegistroPlacasBO;
 import entidadesJPA.Automovil;
 import entidadesJPA.Persona;
+import entidadesJPA.Placa;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.JOptionPane;
 import negocio.IGestorVehiculosBO;
+import negocio.IRegistroPlacasBO;
 
 /**
  *
@@ -16,6 +22,8 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
     private final IPersonasDAO personaDAO = new PersonasDAO();
     private final String rfc;
     private final IGestorVehiculosBO gv = new GestorVehiculoBO();
+    private final IRegistroPlacasBO placasbo = new RegistroPlacasBO();
+    formPrincipal principal = new formPrincipal();
     /**
      * Creates new form formAutomovilNuevo
      */
@@ -36,6 +44,27 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
         auto.setPersona(persona);
         
         return auto;
+    }
+    
+    private void agregarPlaca() {                                            
+        Placa p = new Placa();
+        Automovil  a = new Automovil();
+        Persona persona = personaDAO.buscarPersonasRFC(rfc);
+        
+       
+       p.setTipo("Placa");
+       p.setPersona(persona);
+       p.setAutomovil(crearAuto());
+       p.setCosto(1500.0);
+       p.setFecha_recepcion(Calendar.getInstance());
+       p.setFecha(Calendar.getInstance());
+       p.setEstado("Activa");
+       
+       
+       placasbo.registrarPlacaBO(p, rfc);
+       
+        
+//        placasbo.registrarPlacaBO(placa);
     }
 
     /**
@@ -268,9 +297,17 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         gv.agregarVehiculo(crearAuto());
         
-        formTramitarPlaca placa = new formTramitarPlaca(rfc, 1500, crearAuto());
-        placa.setVisible(true);
-        dispose();
+        int opcion = JOptionPane.showConfirmDialog(this, "Auto agregado"
+                + " ¿Desea tramitar placa?", "Aviso", JOptionPane.YES_NO_OPTION);
+        
+        if (opcion == JOptionPane.YES_OPTION) {
+            agregarPlaca();
+            JOptionPane.showConfirmDialog(this, "Placa agregada","Aviso", JOptionPane.OK_OPTION);
+            principal.setVisible(true);
+            dispose();
+        }
+        
+      
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
 
