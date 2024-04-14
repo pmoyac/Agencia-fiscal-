@@ -87,6 +87,10 @@ public class Placa extends Tramite {
     public Automovil getAutomovil() {
         return automovil;
     }
+    
+    public String getNoSerieAuto(){
+        return automovil.getId();
+    }
 
     public void setAutomovil(Automovil automovil) {
         this.automovil = automovil;

@@ -2,10 +2,13 @@ package interfaz;
 
 import daos.ILicenciasDAO;
 import daos.IPersonasDAO;
+import daos.IPlacasDAO;
 import daos.LicenciasDAO;
 import daos.PersonasDAO;
+import daos.PlacasDAO;
 import entidadesJPA.Licencia;
 import entidadesJPA.Persona;
+import entidadesJPA.Placa;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,8 +23,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class formHistorial extends javax.swing.JFrame {
     private final Persona personaSeleccionada;
-    private final ILicenciasDAO licencia = new LicenciasDAO();
-    
+    private final ILicenciasDAO licenciaDAO = new LicenciasDAO();
+    private final IPlacasDAO placaDAO = new PlacasDAO();
 
     /**
      * Creates new form formHistorial
@@ -38,6 +41,7 @@ public class formHistorial extends javax.swing.JFrame {
         }
         
         insertarLicencias();
+        insertarPlacas();
     }
     
     /**
@@ -133,7 +137,7 @@ public class formHistorial extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "No. placa", "Costo", "Estado","No. serie auto"
             }
         ));
         jScrollPane2.setViewportView(tablaPlacas);
@@ -204,7 +208,7 @@ public class formHistorial extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tablaLicencias.getModel();
         model.setRowCount(0); 
 
-        List<Licencia> licencias = licencia.obtenerLicencias(personaSeleccionada);
+        List<Licencia> licencias = licenciaDAO.obtenerLicencias(personaSeleccionada);
 
         if (licencias != null && !licencias.isEmpty()) {
             for (Licencia licencia : licencias) {
@@ -213,6 +217,24 @@ public class formHistorial extends javax.swing.JFrame {
                     licencia.getEstado(),
                     licencia.getFecha(),
                     licencia.getVigencia()
+                });
+            }
+        }
+    }
+    
+    public void insertarPlacas() {
+        DefaultTableModel model = (DefaultTableModel) tablaPlacas.getModel();
+        model.setRowCount(0);
+
+        List<Placa> placas = placaDAO.obtenerPlacas(personaSeleccionada);
+
+        if (placas != null && !placas.isEmpty()) {
+            for (Placa placa : placas) {
+                model.addRow(new Object[]{
+                    placa.getNo_placa(),
+                    placa.getCosto(),
+                    placa.getEstado(),
+                    placa.getNoSerieAuto()
                 });
             }
         }

@@ -1,6 +1,8 @@
 package daos;
 
+import entidadesJPA.Persona;
 import entidadesJPA.Placa;
+import java.util.List;
 
 /**
  *
@@ -21,6 +23,7 @@ public interface IPlacasDAO {
     */
     public Placa buscarPlaca(String numPlaca);
     
-    
     public Placa modificarVigencia(Placa placa);
+    
+    public List<Placa> obtenerPlacas(Persona persona);
 }

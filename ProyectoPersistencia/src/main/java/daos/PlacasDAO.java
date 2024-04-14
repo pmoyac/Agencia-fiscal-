@@ -1,6 +1,8 @@
 package daos;
 
+import entidadesJPA.Persona;
 import entidadesJPA.Placa;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -67,6 +69,21 @@ public class PlacasDAO implements IPlacasDAO{
     @Override
     public Placa modificarVigencia(Placa placa) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Placa> obtenerPlacas(Persona persona) {
+        try {
+            TypedQuery<Placa> query = em.createQuery(
+                    "select p from Placa p "
+                    + "where p.persona = :persona",
+                    Placa.class);
+            query.setParameter("persona", persona);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
     }
     
 }
