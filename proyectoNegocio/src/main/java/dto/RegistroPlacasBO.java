@@ -16,12 +16,13 @@ public class RegistroPlacasBO implements IRegistroPlacasBO{
     IPersonasDAO per = new PersonasDAO();
 
     @Override
-    public void registrarPlacaBO(Placa placa, String rfc) {
+    public String registrarPlacaBO(Placa placa, String rfc) {
         PlacasDAO placaDao = new PlacasDAO();
         Automovil  a = new Automovil();
         Persona persona = per.buscarPersonasRFC(rfc);
         a = placa.getAutomovil();
         placaDao.agregarPlaca(placa);
+        return placa.getNo_placa();
     }
     
 }

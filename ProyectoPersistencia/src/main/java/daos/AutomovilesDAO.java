@@ -2,15 +2,18 @@ package daos;
 
 import entidadesJPA.Automovil;
 import entidadesJPA.Persona;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
@@ -56,5 +59,26 @@ public class AutomovilesDAO implements IAutomovilDAO{
 //            em.close();
 //        }
 //    }
+
+    @Override
+    public Automovil buscarAutoNoSerie(String num_serie) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Automovil> cq = cb.createQuery(Automovil.class);
+        Root<Automovil> root = cq.from(Automovil.class);
+        List<Predicate> parametros = new ArrayList<>();
+        
+        if(num_serie != null){
+            parametros.add(cb.equal(root.get("id"), num_serie));
+        }
+        
+        cq.select(root).where(parametros.toArray(Predicate[]::new));
+        TypedQuery<Automovil> query = em.createQuery(cq);
+        
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
     
 }

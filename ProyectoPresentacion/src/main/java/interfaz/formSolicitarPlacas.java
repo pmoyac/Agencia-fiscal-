@@ -179,6 +179,7 @@ public class formSolicitarPlacas extends javax.swing.JFrame {
 
         btnCancelar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);

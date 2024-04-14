@@ -87,7 +87,7 @@ public class Automovil extends Vehiculo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Automovil{");
-    //    sb.append("numeroSerie=").append(id);
+   //    sb.append("numeroSerie=").append(id);
         sb.append(", color=").append(color);
         sb.append(", modelo=").append(modelo);
         sb.append(", linea=").append(linea);
