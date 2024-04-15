@@ -21,18 +21,23 @@ import negocio.IRegistroPlacasBO;
  */
 public class formAutomovilNuevo extends javax.swing.JFrame {
 
-    private final IPersonasDAO personaDAO = new PersonasDAO();
+    private final IPersonasDAO personaDAO;
     private final String rfc;
-    private final IGestorVehiculosBO gv = new GestorVehiculoBO();
-    private final IRegistroPlacasBO placasbo = new RegistroPlacasBO();
-    formPrincipal principal = new formPrincipal();
+    private final IGestorVehiculosBO gv;
+    private final IRegistroPlacasBO placasbo;
+    formPrincipal principal;
     Placa placa = new Placa();
-    AutomovilesDAO autoDAO = new AutomovilesDAO();
+    AutomovilesDAO autoDAO;
 
     /**
      * Creates new form formAutomovilNuevo
      */
     public formAutomovilNuevo(String rfc) {
+        this.autoDAO = new AutomovilesDAO();
+        this.principal = new formPrincipal();
+        this.placasbo = new RegistroPlacasBO();
+        this.gv = new GestorVehiculoBO();
+        this.personaDAO = new PersonasDAO();
         initComponents();
         this.rfc = rfc;
     }
