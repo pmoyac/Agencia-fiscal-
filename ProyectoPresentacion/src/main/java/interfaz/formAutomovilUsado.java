@@ -1,9 +1,23 @@
 package interfaz;
 
+import daos.AutomovilesDAO;
+import daos.IAutomovilDAO;
+import daos.IPersonasDAO;
+import daos.IPlacasDAO;
+import daos.PersonasDAO;
+import daos.PlacasDAO;
+import dto.RegistroPlacasBO;
 import entidadesJPA.Automovil;
+import entidadesJPA.Persona;
+import entidadesJPA.Placa;
 import entidadesJPA.Vehiculo;
+import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import negocio.IRegistroPlacasBO;
 
 /**
  *
@@ -11,50 +25,99 @@ import javax.swing.table.DefaultTableModel;
  */
 public class formAutomovilUsado extends javax.swing.JFrame {
 
+    private final IAutomovilDAO autoDAO;
+    String rfc;
+    private final IRegistroPlacasBO registroPlacasBO;
+    private final IPersonasDAO personaDAO;
+    private final IPlacasDAO placasDAO;
+    Placa placanueva;
+
     /**
      * Creates new form formAutomovilUsado
+     *
+     * @param rfc
      */
-    public formAutomovilUsado() {
+    public formAutomovilUsado(String rfc) {
         initComponents();
-//        llenarTablaPersona(autos);
+        this.placanueva = new Placa();
+        this.autoDAO = new AutomovilesDAO();
+        this.personaDAO = new PersonasDAO();
+        this.placasDAO = new PlacasDAO();
+        this.rfc = rfc;
+        this.registroPlacasBO = new RegistroPlacasBO();
+        llenarTablaPlaca(placasDAO.obtenerPlacas(personaDAO.buscarPersonasRFC(rfc)));
     }
-    
-    private void llenarTablaPersona(List<Automovil> autos) {
+
+    private void buscarNoPlaca() {
+        String noPlacas = this.txtNoPlacas.getText();
+
+        try {
+            if (!noPlacas.isEmpty()) {
+                Pattern patron = Pattern.compile("[A-Z]{3}-[0-9]{3}");
+                Matcher matcher = patron.matcher(noPlacas);
+                if (!matcher.matches()) {
+                    JOptionPane.showMessageDialog(this, "Ingrese en el siguiente formato: ABC-123.", "Formato incorrecto", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    Placa placa = placasDAO.buscarPlaca(noPlacas);
+                    if (placa != null) {
+                        JOptionPane.showMessageDialog(this, "Placa "+placa.getNo_placa()+ " Enontrada",
+                                "Placa encontrada.", JOptionPane.INFORMATION_MESSAGE);
+                        placanueva = placa;
+                        btnAceptar.setEnabled(true);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un numero de placas.", "Campo vacío",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "El numero de placas proporcionado no se ha encontrado en la"
+                    + " base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void agregarPlaca(Placa placa) {
+
+        try {
+            if ("Activa".equals(placa.getEstado())) {
+                JOptionPane.showMessageDialog(this, "Ya cuenta con una placa activa", "Error", JOptionPane.ERROR_MESSAGE);
+            }else{
+                Placa placaN = new Placa();
+                placaN.setCosto(1000.00);
+                placaN.setFecha_recepcion(Calendar.getInstance());
+                placaN.setFecha(Calendar.getInstance());
+                placaN.setEstado("Activa");
+                placaN.setAutomovil(placa.getAutomovil());
+                placaN.setTipo("Placa");
+                placaN.setPersona(placa.getPersona());
+                registroPlacasBO.registrarPlacaBO(placaN, this.rfc);
+                JOptionPane.showMessageDialog(this, "Placa agregada",
+                        "Placa agregada.", JOptionPane.INFORMATION_MESSAGE);
+            }            
+//            placasDAO.agregarPlaca(placaN);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "No se pudo agrega la placa", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void llenarTablaPlaca(List<Placa> placas) {
         DefaultTableModel modelo = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return column == getColumnCount() - 1;
             }
         };
-        modelo.addColumn("NO. SERIE");
-        modelo.addColumn("MARCA");
-        modelo.addColumn("LINEA");
-        modelo.addColumn("COLOR");
-        modelo.addColumn("MODELO");
-        modelo.addColumn("");
+        modelo.addColumn("NO. Placa");
+        modelo.addColumn("No. Serie");
+        modelo.addColumn("Estado");
+        modelo.addColumn("Fecha");
 
-        for (Automovil automovil : autos) {
+        for (Placa placa : placas) {
 
-            Object[] fila = {automovil.getId(), automovil.getMarca(), automovil.getLinea(), automovil.getColor(), automovil.getModelo()};
+            Object[] fila = {placa.getNo_placa(), placa.getNoSerieAuto(), placa.getEstado(), placa.getFecha_recepcion()};
             modelo.addRow(fila);
         }
         this.jTable_autos.setModel(modelo);
-        
-        
-//        int fila = this.jTable_autos.gets;
-//        ButtonColumn buttonColumn = new ButtonColumn("SELECCIONAR", (e) -> {
-//            
-//            VehiculoNuevoDTO vehiculo = autos.get(fila);
-
-//            if (isLicenciaActiva()) {
-//                PantallaPlacasVehiculo pPlacasVehiculo = new PantallaPlacasVehiculo(parent, true, vehiculo);
-//                pPlacasVehiculo.setVisible(true);
-//
-//            }
-//        }
-//);
-//        tblVehiculos.getColumnModel().getColumn(tblVehiculos.getColumnCount() - 1).setCellRenderer(buttonColumn);
-//        tblVehiculos.getColumnModel().getColumn(tblVehiculos.getColumnCount() - 1).setCellEditor(buttonColumn);
     }
 
     /**
@@ -141,6 +204,11 @@ public class formAutomovilUsado extends javax.swing.JFrame {
         btnBuscar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         panelRound2.setBackground(new java.awt.Color(243, 243, 243));
 
@@ -190,11 +258,7 @@ public class formAutomovilUsado extends javax.swing.JFrame {
 
         jTable_autos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
 
@@ -303,6 +367,7 @@ public class formAutomovilUsado extends javax.swing.JFrame {
         btnAceptar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
         btnAceptar.setText("Aceptar");
         btnAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAceptar.setEnabled(false);
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -350,15 +415,20 @@ public class formAutomovilUsado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        formSolicitarPlacas solicitarP = new formSolicitarPlacas();
-//        solicitarP.setVisible(true);
+        formSolicitarPlacas solicitarP = new formSolicitarPlacas(rfc);
+        solicitarP.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        Automovil autorr = new Automovil();
-        
+        agregarPlaca(placanueva);
+
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+//        placasDAO.buscarPlaca(numPlaca);
+        buscarNoPlaca();
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

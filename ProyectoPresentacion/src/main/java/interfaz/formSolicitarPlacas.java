@@ -12,6 +12,7 @@ import javax.swing.table.TableCellRenderer;
 public class formSolicitarPlacas extends javax.swing.JFrame {
 
     private final String rfc;
+    formAutomovilUsado autoUsado ;
 
     /**
      * Creates new form formSolicitarPlacas
@@ -25,7 +26,7 @@ public class formSolicitarPlacas extends javax.swing.JFrame {
 
     public formSolicitarPlacas(String rfc) {
         initComponents();
-
+        autoUsado = new formAutomovilUsado(rfc);
         tablaCostosPlacas.getTableHeader().setFont(new Font("Candara", Font.BOLD, 20));
         tablaCostosPlacas.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         ajustarAlturaFilas(tablaCostosPlacas);
@@ -233,7 +234,7 @@ public class formSolicitarPlacas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnUsadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsadoActionPerformed
-        formAutomovilUsado autoUsado = new formAutomovilUsado();
+        
         autoUsado.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnUsadoActionPerformed

@@ -5,6 +5,9 @@
 package negocio;
 
 import entidadesJPA.Automovil;
+import entidadesJPA.Persona;
+import entidadesJPA.Placa;
+import java.util.List;
 
 /**
  *
@@ -12,4 +15,8 @@ import entidadesJPA.Automovil;
  */
 public interface IGestorVehiculosBO {
     public void agregarVehiculo(Automovil auto);
+    
+    public List<Automovil> obtenerVehiculos(Persona persona);
+    
+    public List<Placa> obtenerPlaca(Persona persona);
 }

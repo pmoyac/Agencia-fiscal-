@@ -2,6 +2,7 @@ package daos;
 
 import entidadesJPA.Persona;
 import entidadesJPA.Placa;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -18,26 +20,28 @@ import javax.persistence.criteria.Root;
  *
  * @author Pedro
  */
-public class PlacasDAO implements IPlacasDAO{
+public class PlacasDAO implements IPlacasDAO {
+
     EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("Persistencia");
     EntityManager em = emFactory.createEntityManager();
 
     static final Logger logger = Logger.getLogger(PlacasDAO.class.getName());
+
     @Override
     public Placa agregarPlaca(Placa placa) {
-        
-        try {            
+
+        try {
             em.getTransaction().begin();
             em.persist(placa);
             em.getTransaction().commit();
-                       
+
         } catch (Exception e) {
             em.getTransaction().rollback();
             logger.log(Level.SEVERE, "No se pudo agregar la placa", e);
         } finally {
             em.close();
-        }    
-        return placa;           
+        }
+        return placa;
     }
 
     @Override
@@ -61,14 +65,43 @@ public class PlacasDAO implements IPlacasDAO{
 //            logger.log(Level.SEVERE, "Error al consultar la placa", e);
 //            
 //        } 
-        }finally {
+        } finally {
             em.close();
         }
     }
 
     @Override
     public Placa modificarVigencia(Placa placa) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        try {
+            em.getTransaction().begin();
+
+            String jpqlUpdate = "UPDATE Placa p SET p.estado = :estado, p.fecha_recepcion = :fecha WHERE p.no_placa = :numPlaca";
+            Query queryUpdate = em.createQuery(jpqlUpdate);
+            queryUpdate.setParameter("estado", false);
+            queryUpdate.setParameter("fecha", Calendar.getInstance());
+            queryUpdate.setParameter("numPlaca", placa.getNo_placa());
+
+            int updatedCount = queryUpdate.executeUpdate();
+            if (updatedCount > 0) {
+                String jpqlSelect = "SELECT p FROM Placa p WHERE p.numeroPlaca = :numPlaca";
+                Query querySelect = em.createQuery(jpqlSelect);
+                querySelect.setParameter("numPlaca", placa.getNo_placa());
+                List<Placa> placasModificadas = querySelect.getResultList();
+                em.getTransaction().commit();
+                logger.log(Level.INFO, "Se modificó el estado y la fecha de recepción de la Placa");
+                return placasModificadas.get(0);
+            } else {
+                logger.log(Level.INFO, "No se modificó ninguna placa");
+                return null;
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error al actualizar la placa", e);
+            return null;
+        } finally {
+            em.close();
+        }
+
     }
 
     @Override
@@ -85,5 +118,5 @@ public class PlacasDAO implements IPlacasDAO{
         }
         return null;
     }
-    
+
 }

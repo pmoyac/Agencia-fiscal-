@@ -28,6 +28,10 @@ public class AutomovilesDAO implements IAutomovilDAO{
 
     static final Logger logger = Logger.getLogger(PlacasDAO.class.getName());
     
+    /**
+     * Metodo para agregar auto 
+     * @param auto 
+     */
     @Override
     public void agregarAutomovil(Automovil auto) {
         try {
@@ -43,23 +47,35 @@ public class AutomovilesDAO implements IAutomovilDAO{
         }
     }
     
-//    public List<Automovil> consultarVehiculos(Persona persona)  {
-//        
-//        try {
-//            CriteriaBuilder builder = em.getCriteriaBuilder();
-//            CriteriaQuery<Automovil> criteria = builder.createQuery(Automovil.class);
-//            Root<Automovil> root = criteria.from(Automovil.class);
-//            criteria.select(root).where(builder.and(builder.like(root.get("persona").get("rfc"), persona.getRfc())));
-//            TypedQuery<Automovil> query = em.createQuery(criteria);
-//            List<Automovil> vehiculos = query.getResultList();
-//            return vehiculos;
-//        } catch (Exception e) {
-//            logger.log(Level.SEVERE, "No se pudieron consultar los vehiculos", e);            
-//        } finally {
-//            em.close();
-//        }
-//    }
+    /**    
+     * Metodo que devuelve una lista de los automoviles de una persona
+     * @param persona
+     * @return lista de automoviles
+    */  
+    @Override
+    public List<Automovil> consultarVehiculos(Persona persona)  {
+        
+        try {
+            CriteriaBuilder builder = em.getCriteriaBuilder();
+            CriteriaQuery<Automovil> criteria = builder.createQuery(Automovil.class);
+            Root<Automovil> root = criteria.from(Automovil.class);
+            criteria.select(root).where(builder.and(builder.like(root.get("persona").get("rfc"), persona.getRfc())));
+            TypedQuery<Automovil> query = em.createQuery(criteria);
+            List<Automovil> vehiculos = query.getResultList();
+            return vehiculos;
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "No se pudieron consultar los Automoviles", e); 
+            return null;
+        } finally {
+            em.close();
+        }
+    }
 
+    /**
+     * Metodo que busca el automovil por numero de serie
+     * @param num_serie
+     * @return automovil encontrado
+     */
     @Override
     public Automovil buscarAutoNoSerie(String num_serie) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
