@@ -5,19 +5,29 @@ import entidadesJPA.Persona;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author adria
+ * Clase que representa una interfaz gráfica para consultar personas y generar reportes basados en la información de la persona consultada.
+ * Permite buscar personas por su RFC y visualizar los detalles de la persona encontrada.
+ * Además, permite generar reportes para la persona consultada.
+ * @author Adriana
  */
 public class formConsultarPersonaReporte extends javax.swing.JFrame {
     private final PersonasDAO persona = new PersonasDAO();
     private Persona personaEncontrada;
+    
     /**
-     * Creates new form formConsultarPersonaReporte
+     * Constructor de la clase formConsultarPersonaReporte.
+     * Inicializa la interfaz gráfica y sus componentes.
      */
     public formConsultarPersonaReporte() {
         initComponents();
     }
 
+    /**
+     * Método para buscar una persona en la base de datos utilizando su RFC.
+     * Si se encuentra una persona con el RFC proporcionado, se muestra su información en un cuadro de diálogo.
+     * Además, habilita el botón "Siguiente" para generar un reporte para la persona encontrada.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void buscarRFC(java.awt.event.ActionEvent evt) {
         String rfc = txtRFC.getText();
 
@@ -230,16 +240,31 @@ public class formConsultarPersonaReporte extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRFCActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Cancelar".
+     * Cierra este formulario y abre el formulario principal.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         formPrincipal principal = new formPrincipal();
         principal.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Restaurar".
+     * Limpia el campo de texto del RFC.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
         txtRFC.setText("");
     }//GEN-LAST:event_btnRestaurarActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Siguiente".
+     * Abre el formulario de reportes para la persona encontrada, si existe.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         if (personaEncontrada != null) {
             formReportes reportes = new formReportes(personaEncontrada.getNombres()
@@ -249,6 +274,11 @@ public class formConsultarPersonaReporte extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Buscar".
+     * Llama al método buscarRFC para realizar la búsqueda de una persona utilizando el RFC ingresado.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         buscarRFC(evt);
     }//GEN-LAST:event_btnBuscarActionPerformed

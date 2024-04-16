@@ -1,25 +1,19 @@
 package interfaz;
 
-import daos.ILicenciasDAO;
-import daos.IPersonasDAO;
-import daos.IPlacasDAO;
+import interfaces.ILicenciasDAO;
+import interfaces.IPlacasDAO;
 import daos.LicenciasDAO;
-import daos.PersonasDAO;
 import daos.PlacasDAO;
 import entidadesJPA.Licencia;
 import entidadesJPA.Persona;
 import entidadesJPA.Placa;
-import java.awt.Color;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author adria
+ * Clase que representa una interfaz gráfica para mostrar el historial de licencias y placas de un persona.
+ * Permite visualizar la información de las licencias y placas asociadas a una persona seleccionada.
+ * @author Adriana
  */
 public class formHistorial extends javax.swing.JFrame {
     private final Persona personaSeleccionada;
@@ -27,8 +21,9 @@ public class formHistorial extends javax.swing.JFrame {
     private final IPlacasDAO placaDAO = new PlacasDAO();
 
     /**
-     * Creates new form formHistorial
-     * @param persona
+     * Constructor de la clase formHistorial.
+     * Inicializa la interfaz gráfica y muestra el historial de licencias y placas asociadas a la persona seleccionada.
+     * @param persona La persona seleccionada para mostrar su historial.
      */
     public formHistorial(Persona persona) {
         initComponents();
@@ -38,8 +33,7 @@ public class formHistorial extends javax.swing.JFrame {
             txtPersona.setText(personaSeleccionada.getNombres() + " " 
                     + personaSeleccionada.getApellido_paterno() + " " 
                     + personaSeleccionada.getApellido_materno());
-        }
-        
+        }      
         insertarLicencias();
         insertarPlacas();
     }
@@ -204,6 +198,9 @@ public class formHistorial extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método para insertar las licencias asociadas a la persona seleccionada en la tabla de licencias.
+     */
     public void insertarLicencias() {
         DefaultTableModel model = (DefaultTableModel) tablaLicencias.getModel();
         model.setRowCount(0); 
@@ -222,6 +219,9 @@ public class formHistorial extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Método para insertar las placas asociadas a la persona seleccionada en la tabla de placas.
+     */
     public void insertarPlacas() {
         DefaultTableModel model = (DefaultTableModel) tablaPlacas.getModel();
         model.setRowCount(0);
@@ -240,6 +240,11 @@ public class formHistorial extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Método para manejar el evento de clic en el botón "Regresar".
+     * Cierra este formulario y abre el formulario de consulta de personas.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         formConsultaPersonas consultaP = new formConsultaPersonas();
         consultaP.setVisible(true);

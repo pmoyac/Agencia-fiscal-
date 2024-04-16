@@ -1,6 +1,6 @@
 package daos;
 
-import entidadesJPA.Automovil;
+import interfaces.IPlacasDAO;
 import entidadesJPA.Persona;
 import entidadesJPA.Placa;
 import java.util.Calendar;
@@ -19,7 +19,7 @@ import javax.persistence.criteria.Root;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Esta clase proporciona métodos para acceder y manipular la entidad de Placas en la base de datos.
  * @author Pedro
  */
 public class PlacasDAO implements IPlacasDAO {
@@ -28,7 +28,13 @@ public class PlacasDAO implements IPlacasDAO {
     EntityManager em = emFactory.createEntityManager();
 
     static final Logger logger = Logger.getLogger(PlacasDAO.class.getName());
-
+    
+    /**
+     * Agrega una nueva placa para un automóvil, desactivando previamente todas las placas activas asociadas al mismo automóvil.
+     *
+     * @param placa La placa que se desea agregar.
+     * @return La placa agregada.
+     */
     @Override
     public Placa agregarPlaca(Placa placa) {
         try {
@@ -57,6 +63,12 @@ public class PlacasDAO implements IPlacasDAO {
         return placa;
     }
 
+    /**
+     * Busca una placa en la base de datos por su número de placa.
+     *
+     * @param numPlaca El número de placa que se desea buscar.
+     * @return La placa encontrada, o null si no se encuentra ninguna placa con el número proporcionado.
+     */
     @Override
     public Placa buscarPlaca(String numPlaca) {
         try {
@@ -83,6 +95,12 @@ public class PlacasDAO implements IPlacasDAO {
         }
     }
 
+    /**
+     * Modifica la vigencia de una placa en la base de datos.
+     *
+     * @param placa La placa cuya vigencia se desea modificar.
+     * @return La placa con la vigencia modificada, o null si no se pudo realizar la modificación.
+     */
     @Override
     public Placa modificarVigencia(Placa placa) {
         try {
@@ -111,6 +129,12 @@ public class PlacasDAO implements IPlacasDAO {
         }
     }
 
+    /**
+     * Obtiene la lista de placas asociadas a una persona.
+     *
+     * @param persona La persona de la cual se desean obtener las placas.
+     * @return Una lista de placas asociadas a la persona.
+     */
     @Override
     public List<Placa> obtenerPlacas(Persona persona) {
         try {
@@ -126,6 +150,12 @@ public class PlacasDAO implements IPlacasDAO {
         return null;
     }
 
+    /**
+     * Valida la vigencia de una placa.
+     *
+     * @param placa La placa cuya vigencia se desea validar.
+     * @return true si la placa está vigente, false si no lo está.
+     */
     @Override
     public boolean validarVigencia(Placa placa) {
         boolean vigente = false;

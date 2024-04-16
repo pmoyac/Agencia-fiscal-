@@ -1,6 +1,6 @@
 package interfaz;
 
-import daos.ILicenciasDAO;
+import interfaces.ILicenciasDAO;
 import daos.LicenciasDAO;
 import daos.PersonasDAO;
 import entidadesJPA.Licencia;
@@ -9,8 +9,11 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author adria
+ * Clase que representa una interfaz gráfica para consultar personas y solicitar placas para una persona específica.
+ * Esta clase permite buscar personas por su RFC y visualizar los detalles de la persona encontrada.
+ * Además, permite avanzar al formulario de solicitud de placas para la persona seleccionada, siempre y cuando tenga una licencia activa.
+ * Si la persona no tiene una licencia activa, se redirige al formulario principal.
+ * @author Adriana
  */
 public class formConsultarPersonaPlaca extends javax.swing.JFrame {
     private final PersonasDAO persona = new PersonasDAO();
@@ -18,12 +21,19 @@ public class formConsultarPersonaPlaca extends javax.swing.JFrame {
     formPrincipal principal = new formPrincipal();
 
     /**
-     * Creates new form formConsultarPersonaPlaca
+     * Constructor de la clase formConsultarPersonaPlaca.
+     * Inicializa la interfaz gráfica y sus componentes.
      */
     public formConsultarPersonaPlaca() {
         initComponents();
     }
-        
+      
+    /**
+     * Método para buscar una persona en la base de datos utilizando su RFC.
+     * Si se encuentra una persona con el RFC proporcionado, se muestra su información en un cuadro de diálogo.
+     * Además, habilita el botón "Siguiente" y deshabilita la edición del campo de texto del RFC.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void buscarRFC(java.awt.event.ActionEvent evt) {
         String rfc = txtRFC.getText();
 
@@ -224,6 +234,12 @@ public class formConsultarPersonaPlaca extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método para manejar el evento de clic en el botón "Siguiente".
+     * Verifica si la persona tiene una licencia activa. Si es así, abre el formulario de solicitud de placas.
+     * Si no tiene una licencia activa, muestra un mensaje de error y redirige al formulario principal.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         String rfc = txtRFC.getText();
         Persona personaEncontrada = persona.buscarPersonasRFC(rfc);
@@ -264,9 +280,13 @@ public class formConsultarPersonaPlaca extends javax.swing.JFrame {
                     "Ha ocurrido un error al verificar la licencia.",
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Cancelar".
+     * Cierra este formulario y abre el formulario principal.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         principal.setVisible(true);
         dispose();
@@ -276,6 +296,11 @@ public class formConsultarPersonaPlaca extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRFCActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Buscar".
+     * Llama al método buscarRFC para realizar la búsqueda de una persona utilizando el RFC ingresado.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         buscarRFC(evt);
     }//GEN-LAST:event_btnBuscarActionPerformed

@@ -1,5 +1,6 @@
 package daos;
 
+import interfaces.ILicenciasDAO;
 import entidadesJPA.Licencia;
 import entidadesJPA.Persona;
 import java.util.Calendar;
@@ -8,17 +9,24 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import javax.swing.JOptionPane;
 
 /**
- *
- * @author adria
+ * Esta clase proporciona métodos para acceder y manipular la entidad de Licencias en la base de datos.
+ * @author Adriana
  */
 public class LicenciasDAO implements ILicenciasDAO {
 
     EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("Persistencia");
     EntityManager em = emFactory.createEntityManager();
 
+    /**
+     * Inserta una nueva licencia para una persona en la base de datos, desactivando previamente todas las licencias activas.
+     *
+     * @param persona La persona a la que se le asignará la licencia.
+     * @param vigencia La vigencia de la licencia en años.
+     * @param costo El costo de la licencia.
+     * @param tipo El tipo de la licencia.
+     */
     @Override
     public void insertarLicencia(Persona persona, int vigencia, Double costo, String tipo) {
         try {
@@ -45,6 +53,12 @@ public class LicenciasDAO implements ILicenciasDAO {
         }
     }
 
+    /**
+     * Valida la vigencia de la licencia de un usuario dado su RFC.
+     *
+     * @param rfc El RFC de la persona.
+     * @return true si la licencia está vigente, false si no lo está.
+     */
     @Override
     public boolean validarVigencia(String rfc) {
         boolean vigente = false;
@@ -78,6 +92,12 @@ public class LicenciasDAO implements ILicenciasDAO {
         return vigente;
     }
 
+    /**
+     * Obtiene la lista de licencias asociadas a una persona.
+     *
+     * @param persona La persona de la cual se desean obtener las licencias.
+     * @return Una lista de licencias asociadas a la persona.
+     */
     @Override
     public List<Licencia> obtenerLicencias(Persona persona) {
         try {

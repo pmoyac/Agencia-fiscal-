@@ -1,6 +1,7 @@
 package daos;
 
-import static entidadesJPA.Encriptacion.encriptarTelefono;
+import interfaces.IPersonasDAO;
+import static util.Encriptacion.encriptarTelefono;
 import entidadesJPA.Persona;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -15,14 +16,17 @@ import javax.persistence.criteria.Root;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author adria
+ * Esta clase proporciona métodos para acceder y manipular la entidad de Personas en la base de datos.
+ * @author Adriana
  */
 public class PersonasDAO implements IPersonasDAO {
 
     EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("Persistencia");
     EntityManager em = emFactory.createEntityManager();
 
+    /**
+     * Inserta personas en la base de datos si no existen ya registros previos.
+     */
     @Override
     public void insertarPersonas() {
         boolean personasInsertadas = false;
@@ -64,6 +68,7 @@ public class PersonasDAO implements IPersonasDAO {
 
                 em.getTransaction().begin();
                 for (Persona persona : personas) {
+                    // Encriptar el teléfono antes de insertarlo
                     String telefonoEncriptado = encriptarTelefono(persona.getTelefono());
                     persona.setTelefono(telefonoEncriptado);
                     em.persist(persona);
@@ -81,7 +86,13 @@ public class PersonasDAO implements IPersonasDAO {
                     "Insersión de personas", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-
+    
+    /**
+     * Busca una persona en la base de datos por su RFC.
+     *
+     * @param rfc El RFC de la persona que se desea buscar.
+     * @return La persona encontrada.
+     */
     @Override
     public Persona buscarPersonasRFC(String rfc) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -98,6 +109,14 @@ public class PersonasDAO implements IPersonasDAO {
         return query.getSingleResult();
     }
 
+    /**
+     * Busca personas en la base de datos por varios criterios como RFC, nombre y año de nacimiento.
+     *
+     * @param rfc El RFC de la persona.
+     * @param nombre El nombre de la persona.
+     * @param anio El año de nacimiento de la persona.
+     * @return Una lista de personas que coinciden con los criterios de búsqueda.
+     */
     @Override
     public List<Persona> buscarPersonas(String rfc, String nombre, int anio) {
         CriteriaBuilder cb = em.getCriteriaBuilder();

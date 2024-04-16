@@ -1,11 +1,11 @@
 package interfaz;
 
-import daos.IPersonasDAO;
+import interfaces.IPersonasDAO;
 import daos.PersonasDAO;
 
 /**
  *
- * @author adria
+ * @author Adriana
  */
 public class formReportes extends javax.swing.JFrame {
 

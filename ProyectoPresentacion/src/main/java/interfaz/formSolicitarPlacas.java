@@ -6,8 +6,12 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 /**
- *
- * @author adria
+ * Interfaz gráfica para solicitar placas de automóviles, ya sean nuevos o usados.
+ * Permite al usuario seleccionar entre solicitar placas para un automóvil nuevo o usado.
+ * Además, muestra los costos asociados a cada tipo de trámite.
+ * La clase incluye métodos para ajustar la altura de las filas de la tabla de costos
+ * y para manejar los eventos de los botones de Nuevo, Usado y Cancelar.
+ * @author Adriana
  */
 public class formSolicitarPlacas extends javax.swing.JFrame {
 
@@ -15,15 +19,19 @@ public class formSolicitarPlacas extends javax.swing.JFrame {
     formAutomovilUsado autoUsado ;
 
     /**
-     * Creates new form formSolicitarPlacas
+     * Crea una nueva instancia de formSolicitarPlacas sin especificar el RFC.
+     * Este constructor se utiliza para solicitar placas de automóviles nuevos.
      */
-
     public formSolicitarPlacas() {
         initComponents();
         this.rfc = null;
-
     }
 
+    /**
+     * Crea una nueva instancia de formSolicitarPlacas con el RFC especificado.
+     * Este constructor se utiliza para solicitar placas de automóviles usados.
+     * @param rfc El RFC del propietario del automóvil usado.
+     */
     public formSolicitarPlacas(String rfc) {
         initComponents();
         autoUsado = new formAutomovilUsado(rfc);
@@ -33,6 +41,10 @@ public class formSolicitarPlacas extends javax.swing.JFrame {
         this.rfc = rfc;
     }
 
+    /**
+     * Ajusta la altura de las filas de una tabla para que se ajusten al contenido.
+     * @param table La tabla cuyas filas se van a ajustar.
+     */
     private void ajustarAlturaFilas(JTable table) {
         for (int row = 0; row < table.getRowCount(); row++) {
             int rowHeight = table.getRowHeight();
@@ -221,18 +233,38 @@ public class formSolicitarPlacas extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Maneja el evento de clic en el botón "Cancelar". Crea una nueva instancia
+     * de formConsultarPersonaPlaca, la hace visible y cierra la ventana actual.
+     * Este método se utiliza para cancelar la solicitud de placas y regresar al
+     * formulario de consulta de personas.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         formConsultarPersonaPlaca consultarPersona = new formConsultarPersonaPlaca();
         consultarPersona.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * Maneja el evento de clic en el botón "Nuevo". Crea una nueva instancia de
+     * formAutomovilNuevo con el RFC especificado, la hace visible y cierra la
+     * ventana actual. Este método se utiliza para solicitar placas para un
+     * automóvil nuevo.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         formAutomovilNuevo autoNuevo = new formAutomovilNuevo(rfc);
         autoNuevo.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    /**
+     * Maneja el evento de clic en el botón "Usado". Hace visible la ventana
+     * formAutomovilUsado y cierra la ventana actual. Este método se utiliza
+     * para solicitar placas para un automóvil usado.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnUsadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsadoActionPerformed
         autoUsado.setVisible(true);
         dispose();

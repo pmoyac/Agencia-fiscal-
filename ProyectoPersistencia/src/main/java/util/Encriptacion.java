@@ -1,4 +1,4 @@
-package entidadesJPA;
+package util;
 
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -7,13 +7,22 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- *
- * @author adria
+ * Esta clase proporciona métodos estáticos para encriptar y desencriptar datos, 
+ * utilizando el algoritmo AES con cifrado en bloque y modo CBC.
+ * @author Adriana
  */
 public class Encriptacion {
     
+    /**
+     * Generador de números aleatorios seguro.
+     */
     public static SecureRandom sr = new SecureRandom();
     
+    /**
+     * Encripta un número de teléfono utilizando AES.
+     * @param value El número de teléfono a encriptar.
+     * @return El número de teléfono encriptado como una cadena codificada en Base64.
+     */
     public static String encriptarTelefono(String value){
         String clave = "pruebaencripta04";
         try {
@@ -30,6 +39,11 @@ public class Encriptacion {
         return null;
     }
     
+    /**
+     * Desencripta un número de teléfono previamente encriptado con AES.
+     * @param value El número de teléfono encriptado.
+     * @return El número de teléfono desencriptado.
+     */
     public static String desencriptarTelefono(String value){
         String clave = "pruebaencripta04";
         try {

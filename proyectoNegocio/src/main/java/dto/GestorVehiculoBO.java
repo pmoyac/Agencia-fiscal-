@@ -1,8 +1,8 @@
 package dto;
 
 import daos.AutomovilesDAO;
-import daos.IAutomovilDAO;
-import daos.IPlacasDAO;
+import interfaces.IAutomovilDAO;
+import interfaces.IPlacasDAO;
 import daos.PlacasDAO;
 import entidadesJPA.Automovil;
 import entidadesJPA.Persona;
@@ -15,18 +15,27 @@ import negocio.IGestorVehiculosBO;
 /**
  *
  * @author Pedro
+ * Clase que implementa la interfaz IGestorVehiculosBO para gestionar vehículos.
  */
 public class GestorVehiculoBO implements IGestorVehiculosBO {
 
     private final IPlacasDAO placaDAO;
     private final IAutomovilDAO autoDAO;
 
+    /**
+     * Constructor de la clase GestorVehiculoBO.
+     * Inicializa los objetos de acceso a datos para placas y automóviles.
+     */
     public GestorVehiculoBO() {
         this.placaDAO = new PlacasDAO();
         this.autoDAO = new AutomovilesDAO();
-
     }
 
+    /**
+     * Agrega un automóvil a la base de datos.
+     *
+     * @param auto El automóvil a agregar.
+     */
     @Override
     public void agregarVehiculo(Automovil auto) {
         try {
@@ -36,18 +45,28 @@ public class GestorVehiculoBO implements IGestorVehiculosBO {
         }
     }
 
+    /**
+     * Obtiene la lista de vehículos asociados a una persona.
+     *
+     * @param persona La persona de la cual se desean obtener los vehículos.
+     * @return Una lista de automóviles asociados a la persona.
+     */
     @Override
     public List<Automovil> obtenerVehiculos(Persona persona) {
         try {
-//            List<Automovil> listaAutos = autoDAO.consultarVehiculos(persona);
             return autoDAO.consultarVehiculos(persona);
         } catch (Exception e) {
             Logger.getLogger(GestorVehiculoBO.class.getName()).log(Level.SEVERE, null, e);
-
             return null;
         }
     }
 
+    /**
+     * Obtiene la lista de placas asociadas a una persona.
+     *
+     * @param persona La persona de la cual se desean obtener las placas.
+     * @return Una lista de placas asociadas a la persona.
+     */
     @Override
     public List<Placa> obtenerPlaca(Persona persona) {
         try {            
@@ -57,5 +76,5 @@ public class GestorVehiculoBO implements IGestorVehiculosBO {
             return null;
         }
     }
-
 }
+

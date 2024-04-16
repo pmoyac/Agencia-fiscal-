@@ -1,0 +1,66 @@
+@options
+@packages
+-classpath
+'C:/Users/adria/.m2/repository/org/netbeans/external/AbsoluteLayout/RELEASE160/AbsoluteLayout-RELEASE160.jar;C:/Users/adria/.m2/repository/com/mycompany/ProyectoPersistencia/1.0-SNAPSHOT/ProyectoPersistencia-1.0-SNAPSHOT.jar;C:/Users/adria/.m2/repository/com/mysql/mysql-connector-j/8.2.0/mysql-connector-j-8.2.0.jar;C:/Users/adria/.m2/repository/com/google/protobuf/protobuf-java/3.21.9/protobuf-java-3.21.9.jar;C:/Users/adria/.m2/repository/org/eclipse/persistence/org.eclipse.persistence.core/2.7.10/org.eclipse.persistence.core-2.7.10.jar;C:/Users/adria/.m2/repository/org/eclipse/persistence/org.eclipse.persistence.asm/9.2.0/org.eclipse.persistence.asm-9.2.0.jar;C:/Users/adria/.m2/repository/org/eclipse/persistence/org.eclipse.persistence.antlr/2.7.10/org.eclipse.persistence.antlr-2.7.10.jar;C:/Users/adria/.m2/repository/org/eclipse/persistence/org.eclipse.persistence.jpa/2.7.10/org.eclipse.persistence.jpa-2.7.10.jar;C:/Users/adria/.m2/repository/org/eclipse/persistence/org.eclipse.persistence.jpa.jpql/2.7.10/org.eclipse.persistence.jpa.jpql-2.7.10.jar;C:/Users/adria/.m2/repository/org/eclipse/persistence/org.eclipse.persistence.moxy/2.7.10/org.eclipse.persistence.moxy-2.7.10.jar;C:/Users/adria/.m2/repository/org/eclipse/persistence/jakarta.persistence/2.2.3/jakarta.persistence-2.2.3.jar;C:/Users/adria/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar;C:/Users/adria/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar;C:/Users/adria/.m2/repository/com/mycompany/proyectoNegocio/1.0-SNAPSHOT/proyectoNegocio-1.0-SNAPSHOT.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'9'
+-sourcepath
+'C:/Users/adria/OneDrive/Documentos/GitHub/Agencia-fiscal-/ProyectoPresentacion/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2024. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/adria/OneDrive/Documentos/GitHub/Agencia-fiscal-/ProyectoPresentacion/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'ProyectoPresentacion 1.0-SNAPSHOT API'
+-linkoffline
+'https://docs.oracle.com/javase/9/docs/api' 'C:/Users/adria/OneDrive/Documentos/GitHub/Agencia-fiscal-/ProyectoPresentacion/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'ProyectoPresentacion 1.0-SNAPSHOT API'
+interfaz
+presentacion
+C:\Users\adria\.m2\repository\org\netbeans\external\AbsoluteLayout\RELEASE160\AbsoluteLayout-RELEASE160.jar = 1710965055126
+C:\Users\adria\.m2\repository\com\mycompany\ProyectoPersistencia\1.0-SNAPSHOT\ProyectoPersistencia-1.0-SNAPSHOT.jar = 1713240157953
+C:\Users\adria\.m2\repository\com\mysql\mysql-connector-j\8.2.0\mysql-connector-j-8.2.0.jar = 1711177053777
+C:\Users\adria\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar = 1708029053409
+C:\Users\adria\.m2\repository\org\eclipse\persistence\org.eclipse.persistence.core\2.7.10\org.eclipse.persistence.core-2.7.10.jar = 1708482316636
+C:\Users\adria\.m2\repository\org\eclipse\persistence\org.eclipse.persistence.asm\9.2.0\org.eclipse.persistence.asm-9.2.0.jar = 1708482314612
+C:\Users\adria\.m2\repository\org\eclipse\persistence\org.eclipse.persistence.antlr\2.7.10\org.eclipse.persistence.antlr-2.7.10.jar = 1708482314559
+C:\Users\adria\.m2\repository\org\eclipse\persistence\org.eclipse.persistence.jpa\2.7.10\org.eclipse.persistence.jpa-2.7.10.jar = 1708482314909
+C:\Users\adria\.m2\repository\org\eclipse\persistence\org.eclipse.persistence.jpa.jpql\2.7.10\org.eclipse.persistence.jpa.jpql-2.7.10.jar = 1708482314879
+C:\Users\adria\.m2\repository\org\eclipse\persistence\org.eclipse.persistence.moxy\2.7.10\org.eclipse.persistence.moxy-2.7.10.jar = 1708482314808
+C:\Users\adria\.m2\repository\org\eclipse\persistence\jakarta.persistence\2.2.3\jakarta.persistence-2.2.3.jar = 1708482314813
+C:\Users\adria\.m2\repository\javax\annotation\javax.annotation-api\1.3.2\javax.annotation-api-1.3.2.jar = 1711685276096
+C:\Users\adria\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar = 1710210470504
+C:\Users\adria\.m2\repository\com\mycompany\proyectoNegocio\1.0-SNAPSHOT\proyectoNegocio-1.0-SNAPSHOT.jar = 1713240168877
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\src\main\java = 1711942952643
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\allclasses-index.html = 1713240240477
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\allpackages-index.html = 1713240240481
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\copy.svg = 1713240240577
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\element-list = 1713240240208
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\help-doc.html = 1713240240540
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\index-all.html = 1713240240515
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\index.html = 1713240240453
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\jquery-ui.overrides.css = 1713240240601
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\member-search-index.js = 1713240240489
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\module-search-index.js = 1713240240483
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\overview-summary.html = 1713240240522
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\overview-tree.html = 1713240240447
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\package-search-index.js = 1713240240485
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\script.js = 1713240240575
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\search-page.js = 1713240240584
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\search.html = 1713240240519
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\search.js = 1713240240580
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\serialized-form.html = 1713240240359
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\stylesheet.css = 1713240240571
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\tag-search-index.js = 1713240240491
+C:\Users\adria\OneDrive\Documentos\GitHub\Agencia-fiscal-\ProyectoPresentacion\target\site\apidocs\type-search-index.js = 1713240240487

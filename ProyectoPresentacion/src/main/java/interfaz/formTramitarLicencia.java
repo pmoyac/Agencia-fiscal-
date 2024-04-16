@@ -1,7 +1,7 @@
 package interfaz;
 
-import daos.ILicenciasDAO;
-import daos.IPersonasDAO;
+import interfaces.ILicenciasDAO;
+import interfaces.IPersonasDAO;
 import daos.LicenciasDAO;
 import daos.PersonasDAO;
 import entidadesJPA.Persona;
@@ -11,10 +11,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-
 /**
- *
- * @author adria
+ * Esta clase representa el formulario para tramitar una nueva licencia de conducir.
+ * Permite al usuario solicitar una nueva licencia, especificando la vigencia y si cuenta con alguna discapacidad.
+ * Una vez completado el trámite, registra la licencia en la base de datos y muestra un mensaje de éxito.
+ * Esta clase utiliza los servicios de la capa de datos para interactuar con la base de datos.
+ * @author Adriana
  */
 public class formTramitarLicencia extends javax.swing.JFrame {
 
@@ -24,7 +26,9 @@ public class formTramitarLicencia extends javax.swing.JFrame {
     formPrincipal principal = new formPrincipal();
     
     /**
-     * Creates new form formTramitarLicencia
+     * Constructor de la clase formTramitarLicencia.
+     * Inicializa el formulario y configura la tabla de costos de licencias.
+     * @param rfc El RFC de la persona que solicita la licencia.
      */
     public formTramitarLicencia(String rfc) {
         initComponents();
@@ -35,6 +39,10 @@ public class formTramitarLicencia extends javax.swing.JFrame {
         ajustarAlturaFilas(tablaCostosLicencias);
     }
 
+    /**
+     * Método privado para ajustar la altura de las filas de una tabla.
+     * @param table La tabla a la que se ajustarán las filas.
+     */
     private void ajustarAlturaFilas(JTable table) {
         for (int row = 0; row < table.getRowCount(); row++) {
             int rowHeight = table.getRowHeight();
@@ -233,12 +241,27 @@ public class formTramitarLicencia extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Maneja el evento de clic en el botón "Cancelar". Crea una nueva instancia
+     * de formConsultarPersonaLicencia, la hace visible y cierra la ventana
+     * actual. Este método se utiliza para cancelar el trámite de licencia y
+     * regresar al formulario de consulta de personas.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         formConsultarPersonaLicencia consultarPersona = new formConsultarPersonaLicencia();
         consultarPersona.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * Maneja el evento de clic en el botón "Aceptar". Verifica si la persona ya
+     * tiene una licencia activa, si no, permite el trámite de una nueva
+     * licencia. Registra la nueva licencia en la base de datos y muestra un
+     * mensaje de éxito. Este método se utiliza para aceptar y procesar el
+     * trámite de una nueva licencia.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         Persona persona = personaDAO.buscarPersonasRFC(rfc);
         

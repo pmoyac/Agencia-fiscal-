@@ -1,7 +1,7 @@
 package interfaz;
 
 import daos.AutomovilesDAO;
-import daos.IPersonasDAO;
+import interfaces.IPersonasDAO;
 import daos.PersonasDAO;
 import dto.GestorVehiculoBO;
 import dto.RegistroPlacasBO;
@@ -9,15 +9,15 @@ import entidadesJPA.Automovil;
 import entidadesJPA.Persona;
 import entidadesJPA.Placa;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import negocio.IGestorVehiculosBO;
 import negocio.IRegistroPlacasBO;
 
 /**
- *
- * @author adria
+ * Clase que representa la interfaz gráfica para registrar un nuevo automóvil en el sistema.
+ * Esta clase extiende javax.swing.JFrame.
+ * @author Adriana
  */
 public class formAutomovilNuevo extends javax.swing.JFrame {
 
@@ -30,7 +30,8 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
     AutomovilesDAO autoDAO;
 
     /**
-     * Creates new form formAutomovilNuevo
+     * Constructor de la clase formAutomovilNuevo.
+     * @param rfc El RFC de la persona que está registrando el automóvil.
      */
     public formAutomovilNuevo(String rfc) {
         this.autoDAO = new AutomovilesDAO();
@@ -42,6 +43,10 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
         this.rfc = rfc;
     }
     
+    /**
+     * Método para crear un objeto Automovil con los datos ingresados en la interfaz.
+     * @return El objeto Automovil creado.
+     */
     public Automovil crearAuto(){
         Persona persona = personaDAO.buscarPersonasRFC(rfc);
         
@@ -56,8 +61,11 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
         return auto;
     }
     
+    /**
+     * Método para agregar una placa al sistema.
+     */
     private void agregarPlaca() {
-        Automovil auto = crearAuto(); // Crear el automóvil una sola vez
+        Automovil auto = crearAuto(); 
 
         Persona persona = personaDAO.buscarPersonasRFC(rfc);
 
@@ -289,6 +297,10 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método para validar los campos de entrada en la interfaz.
+     * @return true si los campos son válidos, false si no lo son.
+     */
     private boolean validarCampos() {
         String noSerie = txtNoSerie.getText();
         
@@ -317,13 +329,17 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
         return true;
     }
     
+    // Eventos de botones y otros componentes de la interfaz
+    
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        //Regresa al formulario de solicitar placas
         formSolicitarPlacas solicitarP = new formSolicitarPlacas(rfc);
         solicitarP.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
+        //Borra el contenido de los campos de texto
         txtNoSerie.setText("");
         txtMarca.setText("");
         txtLinea.setText("");
@@ -332,6 +348,7 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRestaurarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        //Registra un nuevo automóvil
         if (!validarCampos()) {
             return;
         } else {

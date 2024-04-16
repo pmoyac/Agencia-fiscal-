@@ -5,19 +5,28 @@ import entidadesJPA.Persona;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author adria
+ * Clase que representa una interfaz gráfica para consultar personas y comenzar el trámite de licencia para una persona específica.
+ * Esta clase permite buscar personas por su RFC y visualizar los detalles de la persona encontrada.
+ * Además, permite avanzar al formulario de trámite de licencia para la persona seleccionada.
+ * @author Adriana
  */
 public class formConsultarPersonaLicencia extends javax.swing.JFrame {
 
     private final PersonasDAO persona = new PersonasDAO();
+    
     /**
-     * Creates new form formConsultarPersona
+     * Constructor de la clase formConsultarPersonaLicencia.
+     * Inicializa la interfaz gráfica y sus componentes.
      */
     public formConsultarPersonaLicencia() {
         initComponents();
     }
     
+    /**
+     * Método para realizar la búsqueda de una persona en la base de datos utilizando su RFC.
+     * Si se encuentra una persona con el RFC proporcionado, se muestra su información en un cuadro de diálogo.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void buscarRFC(java.awt.event.ActionEvent evt) {
         String rfc = txtRFC.getText();
 
@@ -218,20 +227,40 @@ public class formConsultarPersonaLicencia extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método para manejar el evento de clic en el botón "Cancelar".
+     * Abre el formulario principal y cierra este formulario.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         formPrincipal principal = new formPrincipal();
         principal.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Restaurar".
+     * Limpia el campo de texto del RFC.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
         txtRFC.setText("");
     }//GEN-LAST:event_btnRestaurarActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Buscar".
+     * Llama al método buscarRFC para realizar la búsqueda de una persona utilizando el RFC ingresado.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         buscarRFC(evt);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Siguiente".
+     * Abre el formulario de trámite de licencia para la persona cuyo RFC se ingresó.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         formTramitarLicencia tramiteLicencia = new formTramitarLicencia(txtRFC.getText());
         tramiteLicencia.setVisible(true);

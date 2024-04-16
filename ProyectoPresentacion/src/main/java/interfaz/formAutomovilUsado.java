@@ -1,27 +1,24 @@
 package interfaz;
 
 import daos.AutomovilesDAO;
-import daos.IAutomovilDAO;
-import daos.IPersonasDAO;
-import daos.IPlacasDAO;
+import interfaces.IAutomovilDAO;
+import interfaces.IPersonasDAO;
+import interfaces.IPlacasDAO;
 import daos.PersonasDAO;
 import daos.PlacasDAO;
 import dto.RegistroPlacasBO;
 import entidadesJPA.Automovil;
-import entidadesJPA.Persona;
 import entidadesJPA.Placa;
-import entidadesJPA.Vehiculo;
 import java.util.Calendar;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import negocio.IRegistroPlacasBO;
 
 /**
- *
- * @author adria
+ * Clase que representa un formulario para solicitar placas de automóviles usados.
+ * Este formulario permite buscar y registrar placas para automóviles usados.
+ * @author Adriana
  */
 public class formAutomovilUsado extends javax.swing.JFrame {
 
@@ -34,9 +31,9 @@ public class formAutomovilUsado extends javax.swing.JFrame {
     formPrincipal principal = new formPrincipal();
     
     /**
-     * Creates new form formAutomovilUsado
-     *
-     * @param rfc
+     * Constructor de la clase formAutomovilUsado.
+     * Inicializa el formulario y las interfaces de acceso a datos.
+     * @param rfc El RFC de la persona asociada al formulario.
      */
     public formAutomovilUsado(String rfc) {
         initComponents();
@@ -48,6 +45,10 @@ public class formAutomovilUsado extends javax.swing.JFrame {
         this.registroPlacasBO = new RegistroPlacasBO();
     }
 
+    /**
+     * Método para buscar el número de placa ingresado en el formulario.
+     * Valida el formato del número de placa y muestra los detalles del automóvil si se encuentra.
+     */
     private void buscarNoPlaca() {
         String noPlacas = this.txtNoPlacas.getText();
         try {
@@ -79,6 +80,11 @@ public class formAutomovilUsado extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método para agregar una nueva placa al sistema.
+     * Muestra un mensaje de éxito después de registrar la nueva placa.
+     * @param placa La placa a agregar.
+     */
     public void agregarPlaca(Placa placa) {
         try {
             if (placasDAO.validarVigencia(placa)) {
@@ -115,6 +121,10 @@ public class formAutomovilUsado extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Método para llenar los campos del formulario con los detalles del automóvil asociado a una placa.
+     * @param placa La placa cuyo automóvil se utilizará para llenar los campos.
+     */
     private void llenarCamposPlaca(Placa placa) {
         Automovil automovil = placa.getAutomovil();
         if (automovil != null) {
@@ -410,17 +420,19 @@ public class formAutomovilUsado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        //Regresa al formulario de solicitar placas
         formSolicitarPlacas solicitarP = new formSolicitarPlacas(rfc);
         solicitarP.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        //Agrega placa nueva
         agregarPlaca(placanueva);
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-//        placasDAO.buscarPlaca(numPlaca);
+        //Busca la placa ingresada por el usuario
         buscarNoPlaca();
     }//GEN-LAST:event_btnBuscarActionPerformed
 

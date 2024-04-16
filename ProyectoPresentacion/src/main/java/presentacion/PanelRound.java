@@ -10,8 +10,8 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JPanel;
 
 /**
- *
- * @author adria
+ * Clase que extiende JPanel y permite dibujar un panel con esquinas redondeadas personalizadas.
+ * Las esquinas redondeadas se pueden configurar individualmente.
  */
 public class PanelRound extends JPanel{
     

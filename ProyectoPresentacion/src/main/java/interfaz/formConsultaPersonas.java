@@ -11,15 +11,19 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 /**
- *
- * @author adria
+ * Clase que representa una interfaz gráfica para consultar personas en el sistema.
+ * Permite realizar búsquedas de personas por diferentes criterios como RFC, nombre completo y año de nacimiento.
+ * También muestra los resultados de la búsqueda en una tabla.
+ * Además, permite avanzar a un formulario de historial para la persona seleccionada.
+ * @author Adriana
  */
 public class formConsultaPersonas extends javax.swing.JFrame {
     
     private PersonasDAO personaDAO;
 
     /**
-     * Creates new form formConsultaPersonas
+     * Constructor de la clase formConsultaPersonas.
+     * Inicializa la interfaz gráfica y los componentes necesarios, además de la instancia del DAO de personas.
      */
     public formConsultaPersonas() {
         initComponents();
@@ -29,6 +33,10 @@ public class formConsultaPersonas extends javax.swing.JFrame {
         personaDAO = new PersonasDAO();
     }
 
+    /**
+     * Método para ajustar la altura de las filas en una tabla para que se adapten al contenido.
+     * @param table La tabla a la que se le ajustará la altura de las filas.
+     */
     private void ajustarAlturaFilas(JTable table) {
         for (int row = 0; row < table.getRowCount(); row++) {
             int rowHeight = table.getRowHeight();
@@ -43,6 +51,10 @@ public class formConsultaPersonas extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método para actualizar la tabla de personas con los resultados de la búsqueda.
+     * @param personas La lista de personas que se mostrarán en la tabla.
+     */
     private void actualizarTabla(List<Persona> personas) {
         DefaultTableModel model = (DefaultTableModel) tablaPersonas.getModel();
         model.setRowCount(0); // Limpiar la tabla
@@ -267,12 +279,22 @@ public class formConsultaPersonas extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método para manejar el evento de clic en el botón "Cancelar".
+     * Abre el formulario principal y cierra este formulario.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         formPrincipal principal = new formPrincipal();
         principal.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Siguiente".
+     * Verifica si se ha seleccionado una persona en la tabla y, si es así, avanza al formulario de historial para esa persona.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         if (tablaPersonas.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Por favor, seleccione una persona.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -292,6 +314,11 @@ public class formConsultaPersonas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Buscar".
+     * Realiza una búsqueda de personas en la base de datos utilizando los criterios proporcionados por el usuario en los campos de búsqueda.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String rfc = txtRFC.getText();
         String nombreCompleto = txtNombreCompleto.getText();

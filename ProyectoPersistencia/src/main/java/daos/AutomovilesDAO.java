@@ -1,5 +1,6 @@
 package daos;
 
+import interfaces.IAutomovilDAO;
 import entidadesJPA.Automovil;
 import entidadesJPA.Persona;
 import java.util.ArrayList;
@@ -17,20 +18,22 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
+ * Esta clase proporciona métodos para acceder y manipular la entidad de
+ * Automóviles en la base de datos.
  *
  * @author Pedro
  */
-public class AutomovilesDAO implements IAutomovilDAO{
+public class AutomovilesDAO implements IAutomovilDAO {
 
     EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("Persistencia");
     EntityManager em = emFactory.createEntityManager();
-    
 
     static final Logger logger = Logger.getLogger(PlacasDAO.class.getName());
-    
+
     /**
-     * Metodo para agregar auto 
-     * @param auto 
+     * Agrega un automóvil a la base de datos.
+     *
+     * @param auto El automóvil a agregar.
      */
     @Override
     public void agregarAutomovil(Automovil auto) {
@@ -38,23 +41,24 @@ public class AutomovilesDAO implements IAutomovilDAO{
             em.getTransaction().begin();
             em.persist(auto);
             em.getTransaction().commit();
-            logger.log(Level.INFO, "Se agregó el automovil correctamente");
+            logger.log(Level.INFO, "Se agregó el automóvil correctamente");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "error al agregar el automovil");
+            logger.log(Level.SEVERE, "Error al agregar el automóvil", e);
 
         } finally {
             em.close();
         }
     }
-    
-    /**    
-     * Metodo que devuelve una lista de los automoviles de una persona
-     * @param persona
-     * @return lista de automoviles
-    */  
+
+    /**
+     * Consulta y devuelve una lista de automóviles asociados a una persona.
+     *
+     * @param persona La persona de la cual se desean obtener los automóviles.
+     * @return Una lista de automóviles asociados a la persona.
+     */
     @Override
-    public List<Automovil> consultarVehiculos(Persona persona)  {
-        
+    public List<Automovil> consultarVehiculos(Persona persona) {
+
         try {
             CriteriaBuilder builder = em.getCriteriaBuilder();
             CriteriaQuery<Automovil> criteria = builder.createQuery(Automovil.class);
@@ -64,7 +68,7 @@ public class AutomovilesDAO implements IAutomovilDAO{
             List<Automovil> vehiculos = query.getResultList();
             return vehiculos;
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "No se pudieron consultar los Automoviles", e); 
+            logger.log(Level.SEVERE, "No se pudieron consultar los Automóviles", e);
             return null;
         } finally {
             em.close();
@@ -72,9 +76,10 @@ public class AutomovilesDAO implements IAutomovilDAO{
     }
 
     /**
-     * Metodo que busca el automovil por numero de serie
-     * @param num_serie
-     * @return automovil encontrado
+     * Busca y devuelve un automóvil por su número de serie.
+     *
+     * @param num_serie El número de serie del automóvil que se desea buscar.
+     * @return El automóvil encontrado o null si no se encuentra.
      */
     @Override
     public Automovil buscarAutoNoSerie(String num_serie) {
@@ -82,19 +87,19 @@ public class AutomovilesDAO implements IAutomovilDAO{
         CriteriaQuery<Automovil> cq = cb.createQuery(Automovil.class);
         Root<Automovil> root = cq.from(Automovil.class);
         List<Predicate> parametros = new ArrayList<>();
-        
-        if(num_serie != null){
+
+        if (num_serie != null) {
             parametros.add(cb.equal(root.get("id"), num_serie));
         }
-        
+
         cq.select(root).where(parametros.toArray(Predicate[]::new));
         TypedQuery<Automovil> query = em.createQuery(cq);
-        
+
         try {
             return query.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
     }
-    
+
 }

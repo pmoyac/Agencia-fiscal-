@@ -1,26 +1,24 @@
 package interfaz;
 
-import interfaz.formConsultarPersonaLicencia;
 import daos.PersonasDAO;
-import java.awt.Color;
-import javax.swing.JOptionPane;
 
 /**
- *
- * @author adria
+ * Clase que representa la interfaz principal de la aplicación "Agencia Fiscal JV".
+ * Permite acceder a diferentes módulos de la aplicación, como licencias, placas, consultas y reportes.
+ * También proporciona la funcionalidad de inserción de 20 personas en la base de datos.
+ * @author Adriana
  */
 public class formPrincipal extends javax.swing.JFrame {
 
     private final PersonasDAO persona = new PersonasDAO();
 
     /**
-     * Creates new form formPrincipal
+     * Constructor de la clase formPrincipal.
+     * Inicializa la interfaz gráfica principal de la aplicación.
      */
     public formPrincipal() {
         initComponents();
     }
-
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -211,18 +209,33 @@ public class formPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método para manejar el evento de clic en el botón "Módulo de consultas".
+     * Abre el formulario para consultar personas.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnModuloConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloConsultasActionPerformed
         formConsultaPersonas consultas = new formConsultaPersonas();
         consultas.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnModuloConsultasActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Módulo de licencias".
+     * Abre el formulario para ir al módulo de licencias.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnModuloLicenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloLicenciasActionPerformed
         formConsultarPersonaLicencia consultarL = new formConsultarPersonaLicencia();
         consultarL.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnModuloLicenciasActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Módulo de reportes".
+     * Abre el formulario para ir al módulo de reportes.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnModuloReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloReportesActionPerformed
         formConsultarPersonaReporte personaRep = new formConsultarPersonaReporte();
         personaRep.setVisible(true);
@@ -232,17 +245,32 @@ public class formPrincipal extends javax.swing.JFrame {
     private void btnInsersionPersonasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnInsersionPersonasKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnInsersionPersonasKeyPressed
-
+   
+    /**
+     * Método para manejar el evento de clic en el botón "Módulo de placas".
+     * Abre el formulario para ir al módulo de placas.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnModuloPlacasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloPlacasActionPerformed
         formConsultarPersonaPlaca consultarP = new formConsultarPersonaPlaca();
         consultarP.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnModuloPlacasActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Inserción de personas".
+     * Inserta personas en la base de datos.
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnInsersionPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsersionPersonasActionPerformed
         persona.insertarPersonas();
     }//GEN-LAST:event_btnInsersionPersonasActionPerformed
 
+    /**
+     * Método para manejar el evento de clic en el botón "Salir". Cierra la
+     * aplicación al llamar al método System.exit(0).
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
