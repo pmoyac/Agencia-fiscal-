@@ -55,6 +55,9 @@ public abstract class Tramite implements Serializable {
         String formatoFecha = dateFormat.format(fecha.getTime());
         return formatoFecha;
     }
+    public Calendar getFechaCalendar(){
+        return fecha;
+    }
 
     public void setFecha(Calendar fecha) {
         this.fecha = fecha;

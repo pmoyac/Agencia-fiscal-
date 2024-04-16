@@ -242,8 +242,9 @@ public class formConsultarPersonaReporte extends javax.swing.JFrame {
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         if (personaEncontrada != null) {
-            formReportes reportes = new formReportes(personaEncontrada.getNombres()
-            +" " +personaEncontrada.getApellido_paterno()+" " +personaEncontrada.getApellido_materno());
+//            formReportes reportes = new formReportes(personaEncontrada.getNombres()
+//            +" " +personaEncontrada.getApellido_paterno()+" " +personaEncontrada.getApellido_materno());
+            formReportes reportes = new formReportes(this.txtRFC.getText());
             reportes.setVisible(true);
             dispose();
         }
