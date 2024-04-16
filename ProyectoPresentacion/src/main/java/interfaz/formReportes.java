@@ -1,16 +1,24 @@
 package interfaz;
 
+import daos.IPersonasDAO;
+import daos.PersonasDAO;
+
 /**
  *
  * @author adria
  */
 public class formReportes extends javax.swing.JFrame {
 
+    public IPersonasDAO personaDAO = new PersonasDAO();
+    public final String nombrePersona;
+    
     /**
      * Creates new form formReportes
      */
-    public formReportes() {
+    public formReportes(String nombrePersona) {
         initComponents();
+        this.nombrePersona=nombrePersona;
+        txtNombrePersona.setText(nombrePersona);
     }
 
     /**
@@ -35,6 +43,7 @@ public class formReportes extends javax.swing.JFrame {
         tablaTramites = new javax.swing.JTable();
         btnGenerarReporte = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        txtNombrePersona = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Módulo de reportes");
@@ -142,7 +151,7 @@ public class formReportes extends javax.swing.JFrame {
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         btnGenerarReporte.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
@@ -158,31 +167,40 @@ public class formReportes extends javax.swing.JFrame {
             }
         });
 
+        txtNombrePersona.setEditable(false);
+        txtNombrePersona.setBackground(new java.awt.Color(210, 106, 123));
+        txtNombrePersona.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        txtNombrePersona.setBorder(null);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addComponent(btnGenerarReporte)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
                 .addGap(149, 149, 149))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombrePersona, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addContainerGap()
+                .addComponent(txtNombrePersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGenerarReporte)
                     .addComponent(btnCancelar))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 700, 430));
@@ -212,5 +230,6 @@ public class formReportes extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private presentacion.PanelRound panelRound1;
     private javax.swing.JTable tablaTramites;
+    private javax.swing.JTextField txtNombrePersona;
     // End of variables declaration//GEN-END:variables
 }

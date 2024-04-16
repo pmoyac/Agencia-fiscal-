@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
  */
 public class formConsultarPersonaReporte extends javax.swing.JFrame {
     private final PersonasDAO persona = new PersonasDAO();
-    
+    private Persona personaEncontrada;
     /**
      * Creates new form formConsultarPersonaReporte
      */
@@ -28,7 +28,7 @@ public class formConsultarPersonaReporte extends javax.swing.JFrame {
 
         try {
             if (!rfc.isEmpty()) {
-                Persona personaEncontrada = persona.buscarPersonasRFC(rfc);
+                 personaEncontrada = persona.buscarPersonasRFC(rfc);
 
                 if (personaEncontrada != null) {
                     JOptionPane.showMessageDialog(this, personaEncontrada.toString(),
@@ -241,9 +241,12 @@ public class formConsultarPersonaReporte extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRestaurarActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        formReportes reportes = new formReportes();
-        reportes.setVisible(true);
-        dispose();
+        if (personaEncontrada != null) {
+            formReportes reportes = new formReportes(personaEncontrada.getNombres()
+            +" " +personaEncontrada.getApellido_paterno()+" " +personaEncontrada.getApellido_materno());
+            reportes.setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
