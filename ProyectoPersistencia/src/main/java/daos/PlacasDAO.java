@@ -1,5 +1,6 @@
 package daos;
 
+import entidadesJPA.Automovil;
 import entidadesJPA.Persona;
 import entidadesJPA.Placa;
 import java.util.Calendar;
@@ -15,6 +16,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,9 +31,20 @@ public class PlacasDAO implements IPlacasDAO {
 
     @Override
     public Placa agregarPlaca(Placa placa) {
-
         try {
             em.getTransaction().begin();
+
+            TypedQuery<Placa> queryPlaca = em.createQuery(
+                    "SELECT p FROM Placa p WHERE p.automovil = :automovil AND p.estado = 'Activa'",
+                    Placa.class);
+            queryPlaca.setParameter("automovil", placa.getAutomovil());
+            List<Placa> placasActivas = queryPlaca.getResultList();
+
+            for (Placa placaActiva : placasActivas) {
+                placaActiva.setEstado("Inactivo");
+                em.merge(placaActiva);
+            }
+
             em.persist(placa);
             em.getTransaction().commit();
 
@@ -57,22 +70,21 @@ public class PlacasDAO implements IPlacasDAO {
 
             TypedQuery<Placa> query = em.createQuery(criteria);
             Placa placa = query.getSingleResult();
+
+            if (placa != null && placa.getEstado().equals("Inactivo")) {
+                JOptionPane.showMessageDialog(null, 
+                        "La placa proporcionada está inactiva.", 
+                        "Placa Inactiva", JOptionPane.ERROR_MESSAGE);
+            }
+
             return placa;
         } catch (NoResultException e) {
-            logger.log(Level.INFO, "No se encontró la placa");
             return null;
-//        } catch (Exception e) {
-//            logger.log(Level.SEVERE, "Error al consultar la placa", e);
-//            
-//        } 
-        } finally {
-            em.close();
         }
     }
 
     @Override
     public Placa modificarVigencia(Placa placa) {
-
         try {
             em.getTransaction().begin();
 
@@ -84,24 +96,19 @@ public class PlacasDAO implements IPlacasDAO {
 
             int updatedCount = queryUpdate.executeUpdate();
             if (updatedCount > 0) {
-                String jpqlSelect = "SELECT p FROM Placa p WHERE p.numeroPlaca = :numPlaca";
-                Query querySelect = em.createQuery(jpqlSelect);
-                querySelect.setParameter("numPlaca", placa.getNo_placa());
-                List<Placa> placasModificadas = querySelect.getResultList();
                 em.getTransaction().commit();
                 logger.log(Level.INFO, "Se modificó el estado y la fecha de recepción de la Placa");
-                return placasModificadas.get(0);
+                return placa;
             } else {
+                em.getTransaction().rollback();
                 logger.log(Level.INFO, "No se modificó ninguna placa");
                 return null;
             }
         } catch (Exception e) {
+            em.getTransaction().rollback();
             logger.log(Level.SEVERE, "Error al actualizar la placa", e);
             return null;
-        } finally {
-            em.close();
         }
-
     }
 
     @Override
@@ -118,5 +125,32 @@ public class PlacasDAO implements IPlacasDAO {
         }
         return null;
     }
+
+    @Override
+    public boolean validarVigencia(Placa placa) {
+        boolean vigente = false;
+
+        try {
+            TypedQuery<Placa> queryPlaca = em.createQuery(
+                    "SELECT p FROM Placa p WHERE p.automovil = :automovil AND p.estado = 'Activa'",
+                    Placa.class);
+            queryPlaca.setParameter("automovil", placa.getAutomovil());
+            List<Placa> placasActivas = queryPlaca.getResultList();
+
+            for (Placa placaActiva : placasActivas) {
+                if (!placaActiva.getNo_placa().equals(placa.getNo_placa())) {
+                    vigente = false;
+                    return vigente;
+                }
+            }
+            vigente = true;
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error al validar la vigencia de la placa", e);
+        }
+
+        return vigente;
+    }
+
 
 }

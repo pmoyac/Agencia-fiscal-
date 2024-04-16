@@ -31,7 +31,8 @@ public class formAutomovilUsado extends javax.swing.JFrame {
     private final IPersonasDAO personaDAO;
     private final IPlacasDAO placasDAO;
     Placa placanueva;
-
+    formPrincipal principal = new formPrincipal();
+    
     /**
      * Creates new form formAutomovilUsado
      *
@@ -45,12 +46,10 @@ public class formAutomovilUsado extends javax.swing.JFrame {
         this.placasDAO = new PlacasDAO();
         this.rfc = rfc;
         this.registroPlacasBO = new RegistroPlacasBO();
-        llenarTablaPlaca(placasDAO.obtenerPlacas(personaDAO.buscarPersonasRFC(rfc)));
     }
 
     private void buscarNoPlaca() {
         String noPlacas = this.txtNoPlacas.getText();
-
         try {
             if (!noPlacas.isEmpty()) {
                 Pattern patron = Pattern.compile("[A-Z]{3}-[0-9]{3}");
@@ -60,10 +59,15 @@ public class formAutomovilUsado extends javax.swing.JFrame {
                 } else {
                     Placa placa = placasDAO.buscarPlaca(noPlacas);
                     if (placa != null) {
-                        JOptionPane.showMessageDialog(this, "Placa "+placa.getNo_placa()+ " Enontrada",
-                                "Placa encontrada.", JOptionPane.INFORMATION_MESSAGE);
+                        llenarCamposPlaca(placa);
                         placanueva = placa;
-                        btnAceptar.setEnabled(true);
+                        if (!placa.getEstado().equals("Inactivo")) {
+                            btnAceptar.setEnabled(true);
+                        } else {
+                            btnAceptar.setEnabled(false);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "El No. de placa proporcionado no ha sido encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             } else {
@@ -71,53 +75,55 @@ public class formAutomovilUsado extends javax.swing.JFrame {
                         JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "El numero de placas proporcionado no se ha encontrado en la"
-                    + " base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al buscar la placa: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void agregarPlaca(Placa placa) {
-
         try {
-            if ("Activa".equals(placa.getEstado())) {
-                JOptionPane.showMessageDialog(this, "Ya cuenta con una placa activa", "Error", JOptionPane.ERROR_MESSAGE);
-            }else{
-                Placa placaN = new Placa();
-                placaN.setCosto(1000.00);
-                placaN.setFecha_recepcion(Calendar.getInstance());
-                placaN.setFecha(Calendar.getInstance());
-                placaN.setEstado("Activa");
-                placaN.setAutomovil(placa.getAutomovil());
-                placaN.setTipo("Placa");
-                placaN.setPersona(placa.getPersona());
-                registroPlacasBO.registrarPlacaBO(placaN, this.rfc);
-                JOptionPane.showMessageDialog(this, "Placa agregada",
-                        "Placa agregada.", JOptionPane.INFORMATION_MESSAGE);
-            }            
-//            placasDAO.agregarPlaca(placaN);
+            if (placasDAO.validarVigencia(placa)) {
+                int opcion = JOptionPane.showConfirmDialog(this,
+                        "Ya cuenta con una placa activa. ¿Desea tramitar una nueva placa?",
+                        "Confirmación", JOptionPane.YES_NO_OPTION);
+
+                if (opcion == JOptionPane.NO_OPTION) {
+                    principal.setVisible(true);
+                    dispose();
+                    return;
+                }
+            }
+
+            Placa placaNueva = new Placa();
+            placaNueva.setCosto(1000.00);
+            placaNueva.setFecha_recepcion(Calendar.getInstance());
+            placaNueva.setFecha(Calendar.getInstance());
+            placaNueva.setEstado("Activa");
+            placaNueva.setAutomovil(placa.getAutomovil());
+            placaNueva.setTipo("Placa");
+            placaNueva.setPersona(placa.getPersona());
+           // placasDAO.modificarVigencia(placa);
+            String numeroPlacaGenerado = registroPlacasBO.registrarPlacaBO(placaNueva, this.rfc);
+
+            JOptionPane.showMessageDialog(this, "Nueva placa: " + numeroPlacaGenerado,
+                    "Trámite de placa exitoso", JOptionPane.INFORMATION_MESSAGE);
+            principal.setVisible(true);
+            dispose();
+            
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "No se pudo agrega la placa", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al agregar la placa: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }
 
-    private void llenarTablaPlaca(List<Placa> placas) {
-        DefaultTableModel modelo = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return column == getColumnCount() - 1;
-            }
-        };
-        modelo.addColumn("NO. Placa");
-        modelo.addColumn("No. Serie");
-        modelo.addColumn("Estado");
-        modelo.addColumn("Fecha");
-
-        for (Placa placa : placas) {
-
-            Object[] fila = {placa.getNo_placa(), placa.getNoSerieAuto(), placa.getEstado(), placa.getFecha_recepcion()};
-            modelo.addRow(fila);
+    private void llenarCamposPlaca(Placa placa) {
+        Automovil automovil = placa.getAutomovil();
+        if (automovil != null) {
+            txtNoSerie.setText(automovil.getId());
+            txtMarca.setText(automovil.getMarca());
+            txtLinea.setText(automovil.getLinea());
+            txtColor.setText(automovil.getColor());
+            txtModelo.setText(automovil.getModelo());
         }
-        this.jTable_autos.setModel(modelo);
     }
 
     /**
@@ -148,8 +154,6 @@ public class formAutomovilUsado extends javax.swing.JFrame {
         txtLinea = new javax.swing.JTextField();
         txtColor = new javax.swing.JTextField();
         txtModelo = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_autos = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
 
@@ -183,7 +187,7 @@ public class formAutomovilUsado extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 70));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 70));
 
         jPanel2.setBackground(new java.awt.Color(210, 106, 123));
 
@@ -237,34 +241,28 @@ public class formAutomovilUsado extends javax.swing.JFrame {
         txtMarca.setBorder(null);
         txtMarca.setEnabled(false);
         txtMarca.setFocusable(false);
+        txtMarca.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         txtLinea.setBackground(new java.awt.Color(243, 243, 243));
         txtLinea.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         txtLinea.setBorder(null);
         txtLinea.setEnabled(false);
         txtLinea.setFocusable(false);
+        txtLinea.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         txtColor.setBackground(new java.awt.Color(243, 243, 243));
         txtColor.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         txtColor.setBorder(null);
         txtColor.setEnabled(false);
         txtColor.setFocusable(false);
+        txtColor.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         txtModelo.setBackground(new java.awt.Color(243, 243, 243));
         txtModelo.setFont(new java.awt.Font("Candara", 0, 18)); // NOI18N
         txtModelo.setBorder(null);
         txtModelo.setEnabled(false);
         txtModelo.setFocusable(false);
-
-        jTable_autos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(jTable_autos);
+        txtModelo.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout panelRound2Layout = new javax.swing.GroupLayout(panelRound2);
         panelRound2.setLayout(panelRound2Layout);
@@ -273,7 +271,6 @@ public class formAutomovilUsado extends javax.swing.JFrame {
             .addGroup(panelRound2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelRound2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
@@ -292,7 +289,7 @@ public class formAutomovilUsado extends javax.swing.JFrame {
                             .addComponent(txtLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
         panelRound2Layout.setVerticalGroup(
             panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,8 +314,6 @@ public class formAutomovilUsado extends javax.swing.JFrame {
                 .addGroup(panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -352,7 +347,7 @@ public class formAutomovilUsado extends javax.swing.JFrame {
                         .addComponent(btnBuscar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         btnCancelar.setFont(new java.awt.Font("Candara", 1, 22)); // NOI18N
@@ -386,13 +381,13 @@ public class formAutomovilUsado extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(80, 80, 80)
                         .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(184, 184, 184)
+                .addGap(175, 175, 175)
                 .addComponent(btnAceptar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
-                .addGap(141, 141, 141))
+                .addGap(158, 158, 158))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,14 +396,14 @@ public class formAutomovilUsado extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(46, 46, 46)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 700, 480));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 730, 480));
 
         pack();
         setLocationRelativeTo(null);
@@ -422,7 +417,6 @@ public class formAutomovilUsado extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         agregarPlaca(placanueva);
-
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -445,8 +439,6 @@ public class formAutomovilUsado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable_autos;
     private presentacion.PanelRound panelRound1;
     private presentacion.PanelRound panelRound2;
     private javax.swing.JTextField txtColor;

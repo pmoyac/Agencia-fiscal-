@@ -56,26 +56,25 @@ public class formAutomovilNuevo extends javax.swing.JFrame {
         return auto;
     }
     
-    private void agregarPlaca() {                                            
-        Automovil  auto = new Automovil();
-        Persona persona = personaDAO.buscarPersonasRFC(rfc);  
-       
-       placa.setTipo("Placa");
-       placa.setPersona(persona);
-       placa.setAutomovil(crearAuto());
-       placa.setCosto(1500.0);
-       placa.setFecha_recepcion(Calendar.getInstance());
-       placa.setFecha(Calendar.getInstance());
-       placa.setEstado("Activa");
-       
-       placasbo.registrarPlacaBO(placa, rfc);   
-       
-       String numeroPlacaGenerado = placasbo.registrarPlacaBO(placa, rfc);
-       JOptionPane.showMessageDialog(this, "No. de placa: "
-                    + numeroPlacaGenerado, "Automóvil y placas agregados",
-                    JOptionPane.INFORMATION_MESSAGE);
-//        placasbo.registrarPlacaBO(placa);
+    private void agregarPlaca() {
+        Automovil auto = crearAuto(); // Crear el automóvil una sola vez
+
+        Persona persona = personaDAO.buscarPersonasRFC(rfc);
+
+        placa.setTipo("Placa");
+        placa.setPersona(persona);
+        placa.setAutomovil(auto); 
+        placa.setCosto(1500.0);
+        placa.setFecha_recepcion(Calendar.getInstance());
+        placa.setFecha(Calendar.getInstance());
+        placa.setEstado("Activa");
+
+        String numeroPlacaGenerado = placasbo.registrarPlacaBO(placa, rfc); 
+        JOptionPane.showMessageDialog(this, "No. de placa: "
+                + numeroPlacaGenerado, "Automóvil y placas agregados",
+                JOptionPane.INFORMATION_MESSAGE);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

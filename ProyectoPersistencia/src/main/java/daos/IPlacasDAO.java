@@ -1,5 +1,6 @@
 package daos;
 
+import entidadesJPA.Automovil;
 import entidadesJPA.Persona;
 import entidadesJPA.Placa;
 import java.util.List;
@@ -26,4 +27,6 @@ public interface IPlacasDAO {
     public Placa modificarVigencia(Placa placa);
     
     public List<Placa> obtenerPlacas(Persona persona);
+    
+    public boolean validarVigencia(Placa placa);
 }

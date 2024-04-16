@@ -234,7 +234,6 @@ public class formSolicitarPlacas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnUsadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsadoActionPerformed
-        
         autoUsado.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnUsadoActionPerformed
